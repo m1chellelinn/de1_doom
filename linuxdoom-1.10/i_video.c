@@ -57,7 +57,7 @@ void *lw_v_addr = NULL;
 void *sram_v_addr = NULL;
 volatile int *led_ptr = NULL;
 
-byte *local_palette[256*3];
+byte local_palette[256*3];
 
 inline void WriteVgaPixel(int x, int y, byte r, byte g, byte b) {
     volatile uint16_t *vga_ptr = (uint16_t *) (
