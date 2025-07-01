@@ -105,18 +105,29 @@ int I_GetSfxLumpNum(sfxinfo_t*)
 //  is set, but currently not used by mixing.
 //
 int I_StartSound
-( int	id, int, int, int, int )
+( int		id,
+  int		vol,
+  int		sep,
+  int		pitch,
+  int		priority )
 {
+  (void) id;
+  (void) vol;
+  (void) sep;
+  (void) pitch;
+  (void) priority;
   return id;
 }
 
-void I_StopSound (int )
+void I_StopSound (int handle)
 {
+  (void) handle;
 }
 
 int I_SoundIsPlaying(int handle)
 {
-    return 1;
+  (void) handle;
+  return 1;
 }
 
 //
@@ -132,10 +143,7 @@ int I_SoundIsPlaying(int handle)
 //
 // This function currently supports only 16bit.
 //
-void I_UpdateSound( void )
-{
-}
-
+void I_UpdateSound( void) {}
 
 // 
 // This would be used to write out the mixbuffer
@@ -145,74 +153,69 @@ void I_UpdateSound( void )
 // Mixing now done synchronous, and
 //  only output be done asynchronous?
 //
-void I_SubmitSound(void)
+void I_SubmitSound(void) {}
+
+void I_UpdateSoundParams (
+  int		handle,
+  int		vol,
+  int		sep,
+  int		pitch )
 {
+  (void) handle;
+  (void) vol;
+  (void) sep;
+  (void) pitch;
 }
 
-void I_UpdateSoundParams ( int, int, int, int )
-{
-}
+void I_ShutdownSound(void) {}
 
-void I_ShutdownSound(void)
-{
-}
-
-void I_InitSound()
-{ 
-}
+void I_InitSound() {}
 
 //
 // MUSIC API.
 // Still no music done.
 // Remains. Dummies.
 //
-void I_InitMusic(void)
+void I_InitMusic(void) {}
+
+void I_ShutdownMusic(void) {}
+
+void I_PlaySong(
+  int		handle,
+  int		looping )
 {
-}
-void I_ShutdownMusic(void)
-{
+  (void) handle;
+  (void) looping;
 }
 
-void I_PlaySong(int, int)
+void I_PauseSong (int handle)
 {
+  (void) handle;
 }
 
-void I_PauseSong (int)
+void I_ResumeSong (int handle)
 {
+  (void) handle;
 }
 
-void I_ResumeSong (int)
+void I_StopSong(int handle)
 {
+  (void) handle;
 }
 
-void I_StopSong(int)
+void I_UnRegisterSong(int handle)
 {
+  (void) handle;
 }
 
-void I_UnRegisterSong(int)
-{
-}
-
-int I_RegisterSong(void*)
+int I_RegisterSong(void* data)
 {
   return 1;
 }
 
 // Is the song playing?
-int I_QrySongPlaying(int)
+int I_QrySongPlaying(int handle)
 {
+  (void) handle;
   return 1;
 }
-
-// Interrupt handler.
-void I_HandleSoundTimer( int )
-{
-}
-
-// Get the interrupt. Set duration in millisecs.
-int I_SoundSetTimer( int )
-{
-}
-
-// Remove the interrupt. Set duration to zero.
-void I_SoundDelTimer()  {}

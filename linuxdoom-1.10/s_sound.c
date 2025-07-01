@@ -47,9 +47,11 @@ rcsid[] = "$Id: s_sound.c,v 1.6 1997/02/03 22:45:12 b1 Exp $";
 //  allocates channel buffer, sets S_sfx lookup.
 //
 void S_Init
-( int		,
-  int		 )
+( int		sfxVolume,
+  int		musicVolume )
 {  
+    (void) sfxVolume;
+    (void) musicVolume;
 }
 
 
@@ -60,9 +62,7 @@ void S_Init
 // Kills playing sounds at start of level,
 //  determines music if any, changes music.
 //
-void S_Start(void)
-{
-}	
+void S_Start(void) {}	
 
 
 
@@ -70,17 +70,22 @@ void S_Start(void)
 
 void
 S_StartSoundAtVolume
-( void*		,
-  int		,
-  int		 )
+( void*		origin,
+  int		sound_id,
+  int		volume )
 {
+    (void) origin;
+    (void) sound_id;
+    (void) volume;
 }	
 
 void
 S_StartSound
-( void*		,
-  int		 )
+( void*		origin,
+  int		sound_id )
 {
+    (void) origin;
+    (void) sound_id;
 }
 
 
@@ -106,31 +111,39 @@ void S_ResumeSound(void)
 //
 // Updates music & sounds
 //
-void S_UpdateSounds(void* )
+void S_UpdateSounds(void* listener)
 {
+    (void) listener;
 }
 
 
-void S_SetMusicVolume(int )
+void S_SetMusicVolume(int volume)
 {
+    (void) volume;
 }
 
 
 
-void S_SetSfxVolume(int )
+void S_SetSfxVolume(int volume)
 {
-
-
+    (void) volume;
 }
 
 //
 // Starts some music with the music id found in sounds.h.
 //
-void S_StartMusic(int )
+void S_StartMusic(int music_id)
 {
+    (void) music_id;
 }
 
-void S_ChangeMusic (int, int){}
+void S_ChangeMusic 
+( int		music_id,
+  int		looping )
+{
+    (void) music_id;
+    (void) looping;
+}
 
 
 void S_StopMusic(void){}
@@ -138,6 +151,9 @@ void S_StopMusic(void){}
 
 
 
-void S_StopChannel(int){}
+void S_StopChannel(int handle)
+{
+    (void )handle;
+}
 
 
