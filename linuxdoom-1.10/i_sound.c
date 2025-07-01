@@ -87,7 +87,7 @@ void I_SetMusicVolume(int volume)
 // Retrieve the raw data lump index
 //  for a given SFX name.
 //
-int I_GetSfxLumpNum(sfxinfo_t* sfx)
+int I_GetSfxLumpNum(sfxinfo_t*)
 {
   return 0;
 }
