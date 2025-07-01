@@ -31,25 +31,48 @@
 #endif
 
 
-// Called by D_DoomMain,
+// TODO: Called by D_DoomMain,
 // determines the hardware configuration
 // and sets up the video mode
 void I_InitGraphics (void);
 
-
+// TODO: last call before program exit
 void I_ShutdownGraphics(void);
 
+// TODO:
 // Takes full 8 bit values.
+// Embedded DOOM implementation:
+/*
+static byte lpalette[256*3];
+
+void I_SetPalette (byte* palette)
+{
+	memcpy(lpalette, palette, sizeof( lpalette ));
+    //UploadNewPalette(X_cmap, palette);
+	
+}
+*/
 void I_SetPalette (byte* palette);
 
+// draw buffered stuff to screen
+// no implementation. don't need to change
+// 2 locations: d_main.c
 void I_UpdateNoBlit (void);
+
+// TODO: flush framebuffer to VGA
+// buffer declaration, each screen is [SCREENWIDTH*SCREENHEIGHT]:
+/*
+byte* screens[5];	
+*/
 void I_FinishUpdate (void);
 
 // Wait for vertical retrace or pause a bit.
+// defined in i_system.c
 void I_WaitVBL(int count);
 
+// Updates the "screens" array. No need to change
 void I_ReadScreen (byte* scr);
-
+// defined in i_system.c
 void I_BeginRead (void);
 void I_EndRead (void);
 

@@ -1,3 +1,48 @@
+AM_*
+Automap code
+D_*
+Initialisation/general code
+F_*
+"Finale" (end of game) and "screen melt" code.
+G_*
+Main game loop/control
+HU_*
+Heads-up display
+I_*
+System-specific code
+M_*
+Miscellaneous (includes the menu)
+P_*
+Game logic/behaviour
+R_*
+Rendering engine
+S_*
+Sound code
+ST_*
+Status bar
+V_*
+General graphic rendering
+WI_*
+End-of level "intermission" screen
+W_*
+WAD file loading
+Z_*
+Zone memory allocation system
+The following are common prefixes for functions, although they do not denote a particular subsystem, and there are no files with these prefixes:
+
+A_*
+Action functions invoked in sprite movement frames (these are the functions used in Dehacked "code pointers")
+PIT_*
+Callback functions passed to P_BlockThingsIterator (see p_maputl.c)
+T_*
+"Thinker" functions set to be called each clock tic for some purpose (eg, moving platforms or flickering lights)
+A detailed list of files and their purposes can be found in Doom source code files.
+
+
+
+
+
+
 
 Here it is, at long last.  The DOOM source code is released for your
 non-profit use.  You still need real DOOM data to work with this code.

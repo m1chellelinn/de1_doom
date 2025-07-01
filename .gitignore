@@ -1,0 +1,5 @@
+build/*
+linuxdoom-1.10/build/*
+.vscode/*
+
+!linuxdoom-1.10/build/doom1.wad

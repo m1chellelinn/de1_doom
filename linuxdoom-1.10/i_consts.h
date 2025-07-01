@@ -1,0 +1,11 @@
+
+#define VGA_ADDR_X_OFFSET 1
+#define VGA_ADDR_Y_OFFSET 10
+
+#define PALETTE_R_OFFSET 0
+#define PALETTE_G_OFFSET 1
+#define PALETTE_B_OFFSET 2
+
+#define VGA_R_OFFSET 11
+#define VGA_G_OFFSET 5
+#define VGA_B_OFFSET 0

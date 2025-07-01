@@ -616,6 +616,7 @@ void IdentifyVersion (void)
 
     if (M_CheckParm ("-shdev"))
     {
+	printf("M_CheckParm (-shdev): shareware == true");
 	gamemode = shareware;
 	devparm = true;
 	D_AddFile (DEVDATA"doom1.wad");
@@ -627,6 +628,7 @@ void IdentifyVersion (void)
 
     if (M_CheckParm ("-regdev"))
     {
+	printf("M_CheckParm (-regdev): registered == true");
 	gamemode = registered;
 	devparm = true;
 	D_AddFile (DEVDATA"doom.wad");
@@ -639,6 +641,7 @@ void IdentifyVersion (void)
 
     if (M_CheckParm ("-comdev"))
     {
+	printf("M_CheckParm (-comdev): commercial == true");
 	gamemode = commercial;
 	devparm = true;
 	/* I don't bother
