@@ -71,12 +71,18 @@ inline void WriteVgaPixel(int x, int y, byte r, byte g, byte b) {
 
 void I_InitGraphics (void) {
     // Map FPGA virtual address ranges
-    if ((fpga_fd = open_physical (fpga_fd)) == -1)
-    return (1);
-    if (!(lw_v_addr = map_physical (fpga_fd, LW_BRIDGE_BASE, LW_BRIDGE_SPAN)))
-    return (-1);
-    if (!(sram_v_addr = map_physical (fpga_fd, FPGA_ONCHIP_BASE, FPGA_ONCHIP_SPAN)))
-    return (1);
+    if ((fpga_fd = open_physical (fpga_fd)) == -1) {
+        printf("I_InitGraphics: fail to open file to /dev/mem");
+        return;
+    }
+    if (!(lw_v_addr = map_physical (fpga_fd, LW_BRIDGE_BASE, LW_BRIDGE_SPAN))){
+        printf("I_InitGraphics: fail to map FPGA LW bridge");
+        return;
+    }
+    if (!(sram_v_addr = map_physical (fpga_fd, FPGA_ONCHIP_BASE, FPGA_ONCHIP_SPAN))){
+        printf("I_InitGraphics: fail to map FPGA SRAM bridge");
+        return;
+    }
     
     led_ptr = (int *) ( (int)lw_v_addr + LEDR_BASE);
 }
@@ -96,7 +102,8 @@ void I_ShutdownGraphics(void) {
 
 void I_SetPalette (byte* palette) {
     byte c;
-    for (int i=0 ; i<256 ; i++) {
+    int i;
+    for (i = 0 ; i<256 ; i++) {
         c = gammatable[usegamma][*palette++];
         local_palette[i+PALETTE_R_OFFSET] = c >> 3; // VGA R 
         c = gammatable[usegamma][*palette++];
@@ -111,8 +118,9 @@ void I_UpdateNoBlit (void) { }
 
 
 void I_FinishUpdate (void) {
-    for (int y = 0; y < SCREENHEIGHT; y++) {
-        for (int x = 0; x < SCREENWIDTH; x++) {
+    int x, y;
+    for (y = 0; y < SCREENHEIGHT; y++) {
+        for (x = 0; x < SCREENWIDTH; x++) {
             byte index = screens[0][y * SCREENWIDTH + x];
             byte r = local_palette[index+PALETTE_R_OFFSET];
             byte g = local_palette[index+PALETTE_G_OFFSET];
