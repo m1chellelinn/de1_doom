@@ -33,9 +33,6 @@ set_target_properties(linuxxdoom PROPERTIES
 
 # Additional libraries
 target_link_libraries(linuxxdoom
-        -L/usr/X11R6/lib
-        -lXext
-        -lX11
         -lnsl
         -lm
 )
