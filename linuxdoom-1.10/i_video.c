@@ -108,11 +108,11 @@ void I_SetPalette (byte* palette) {
     int i;
     for (i = 0 ; i<256 ; i++) {
         c = gammatable[usegamma][*palette++];
-        local_palette[i+PALETTE_R_OFFSET] = c >> 3; // VGA R 
+        local_palette[i+PALETTE_R_OFFSET] = c; // >> 3; // VGA R 
         c = gammatable[usegamma][*palette++];
-        local_palette[i+PALETTE_G_OFFSET] = c >> 2;
+        local_palette[i+PALETTE_G_OFFSET] = c; // >> 2;
         c = gammatable[usegamma][*palette++];
-        local_palette[i+PALETTE_B_OFFSET] = c >> 3;
+        local_palette[i+PALETTE_B_OFFSET] = c; // >> 3;
     }
 }
 
@@ -121,6 +121,8 @@ void I_UpdateNoBlit (void) { }
 
 
 void I_FinishUpdate (void) {
+    printf("I_FinishUpdate: invoke");
+
     int x, y;
     for (y = 0; y < SCREENHEIGHT; y++) {
         for (x = 0; x < SCREENWIDTH; x++) {
