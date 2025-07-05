@@ -1166,14 +1166,17 @@ void D_DoomMain (void)
 	G_LoadGame (file);
     }
 	
-
+	printf( "Init last step. gameaction = %d, autostart = %s, netgame = %s.\n",
+			gameaction,
+			autostart ? "true" : "false",
+			netgame ? "true" : "false");
+	
     if ( gameaction != ga_loadgame )
     {
 	if (autostart || netgame)
 	    G_InitNew (startskill, startepisode, startmap);
 	else
 	    D_StartTitle ();                // start up intro loop
-
     }
 
     D_DoomLoop ();  // never returns
