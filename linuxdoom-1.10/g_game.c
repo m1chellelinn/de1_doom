@@ -1,4 +1,4 @@
-// Emacs style mode select   -*- C++ -*- 
+// Emacs style mode select   -*- C -*- 
 //-----------------------------------------------------------------------------
 //
 // $Id:$
@@ -1626,7 +1626,7 @@ void G_DoPlayDemo (void)
 void G_TimeDemo (char* name) 
 { 	 
     printf("G_TimeDemo: Playing demo %s\n", name);
-    
+
     nodrawers = M_CheckParm ("-nodraw"); 
     noblit = M_CheckParm ("-noblit"); 
     timingdemo = true; 
