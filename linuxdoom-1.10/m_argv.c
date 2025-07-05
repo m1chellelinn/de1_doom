@@ -40,14 +40,18 @@ char**		myargv;
 // or 0 if not present
 int M_CheckParm (char *check)
 {
+    printf("Checking param %s... ", check);
+
     int		i;
 
     for (i = 1;i<myargc;i++)
     {
 	if ( !strcasecmp(check, myargv[i]) )
+        printf("found at index %d\n", i);
 	    return i;
     }
 
+    printf("does not exist.\n");
     return 0;
 }
 

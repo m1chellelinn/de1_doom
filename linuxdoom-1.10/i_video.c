@@ -110,7 +110,7 @@ void I_SetPalette (byte* palette) {
         c = gammatable[usegamma][*palette++];
         local_palette[i+PALETTE_R_OFFSET] = c >> 3; // VGA R 
         c = gammatable[usegamma][*palette++];
-        local_palette[i+PALETTE_G_OFFSET] = c >> 3;
+        local_palette[i+PALETTE_G_OFFSET] = c >> 2;
         c = gammatable[usegamma][*palette++];
         local_palette[i+PALETTE_B_OFFSET] = c >> 3;
     }

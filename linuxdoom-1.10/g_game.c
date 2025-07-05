@@ -1575,6 +1575,7 @@ char*	defdemoname;
  
 void G_DeferedPlayDemo (char* name) 
 { 
+    printf("G_DeferedPlayDemo_: Playing demo %s\n", name);
     defdemoname = name; 
     gameaction = ga_playdemo; 
 } 
@@ -1624,6 +1625,8 @@ void G_DoPlayDemo (void)
 //
 void G_TimeDemo (char* name) 
 { 	 
+    printf("G_TimeDemo: Playing demo %s\n", name);
+    
     nodrawers = M_CheckParm ("-nodraw"); 
     noblit = M_CheckParm ("-noblit"); 
     timingdemo = true; 
