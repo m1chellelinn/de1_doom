@@ -65,7 +65,7 @@ inline void WriteVgaPixel(int x, int y, byte r, byte g, byte b) {
         ((x+5) << VGA_ADDR_X_OFFSET) + 
         ((y+5) << VGA_ADDR_Y_OFFSET)
     );
-    *vga_ptr = (r << VGA_R_OFFSET) + (g << VGA_G_OFFSET) + (b << VGA_B_OFFSET);
+    *vga_ptr = (r << VGA_R_OFFSET) | (g << VGA_G_OFFSET) | (b << VGA_B_OFFSET);
 }
 
 
@@ -133,6 +133,15 @@ void I_FinishUpdate (void) {
             WriteVgaPixel(x, y, r, g, b);
         }
     }
+
+    // Debug pixels
+    WriteVgaPixel(50, 220, 0xFF, 0xFF, 0xFF);
+    WriteVgaPixel(50, 220, 0xFF, 0x00, 0x00);
+    WriteVgaPixel(50, 220, 0x00, 0xFF, 0x00);
+    WriteVgaPixel(50, 220, 0x00, 0x00, 0xFF);
+    WriteVgaPixel(50, 220, 0xFF, 0xFF, 0x00);
+    WriteVgaPixel(50, 220, 0x00, 0xFF, 0xFF);
+    WriteVgaPixel(50, 220, 0xFF, 0x00, 0xFF);
 }
 
 
