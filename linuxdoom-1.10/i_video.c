@@ -70,7 +70,7 @@ inline void WriteVgaPixel(int x, int y, byte r, byte g, byte b) {
 
 
 void I_InitGraphics (void) {
-    printf("I_InitGraphics: enter");
+    printf("I_InitGraphics: enter\n");
     // Map FPGA virtual address ranges
     if ((fpga_fd = open_physical (fpga_fd)) == -1) {
         printf("I_InitGraphics: fail to open file to /dev/mem");
@@ -90,7 +90,7 @@ void I_InitGraphics (void) {
 
 
 void I_ShutdownGraphics(void) {
-    printf("I_ShutdownGraphics: enter");
+    printf("I_ShutdownGraphics: enter\n");
     unmap_physical (lw_v_addr, LW_BRIDGE_SPAN);
     unmap_physical (sram_v_addr, FPGA_ONCHIP_SPAN);
     close_physical (fpga_fd);
@@ -103,7 +103,7 @@ void I_ShutdownGraphics(void) {
 
 
 void I_SetPalette (byte* palette) {
-    printf("I_SetPalette: enter");
+    printf("I_SetPalette: enter\n");
     byte c;
     int i;
     for (i = 0 ; i<256 ; i++) {
