@@ -66,18 +66,44 @@ ssize_t num_bytes_read;
 
 byte local_palette[256*3];
 
-static const int keyMap[] = {
-    [KEY_UP] = DOOM_KEY_UPARROW,
-    [KEY_W] = DOOM_KEY_UPARROW,
-    [KEY_DOWN] = DOOM_KEY_DOWNARROW,
-    [KEY_S] = DOOM_KEY_DOWNARROW,
-    [KEY_LEFT] = DOOM_KEY_LEFTARROW,
-    [KEY_A] = DOOM_KEY_LEFTARROW,
-    [KEY_RIGHT] = DOOM_KEY_RIGHTARROW,
-    [KEY_D] = DOOM_KEY_RIGHTARROW,
-    [KEY_ENTER] = DOOM_KEY_ENTER,
-    [KEY_ESC] = DOOM_KEY_ESCAPE,
-    [KEY_TAB] = DOOM_KEY_TAB
+static int keyMap[256] = {
+// Weapons
+[KEY_1] = '1',
+[KEY_2] = '2',
+[KEY_3] = '3',
+[KEY_4] = '4',
+[KEY_5] = '5',
+[KEY_6] = '6',
+[KEY_7] = '7',
+
+// Map
+[KEY_F] = 'F',
+[KEY_M] = 'M',
+[KEY_C] = 'C',
+[KEY_O] = 'O',
+[KEY_MINUS] = '-',
+[KEY_EQUAL] = '+',
+
+// Movement
+[KEY_W] = DOOM_KEY_UPARROW,
+[KEY_A] = DOOM_KEY_LEFTARROW,
+[KEY_S] = DOOM_KEY_DOWNARROW,
+[KEY_D] = DOOM_KEY_RIGHTARROW,
+[KEY_UP] = DOOM_KEY_UPARROW,
+[KEY_LEFT] = DOOM_KEY_LEFTARROW,
+[KEY_DOWN] = DOOM_KEY_DOWNARROW,
+[KEY_RIGHT] = DOOM_KEY_RIGHTARROW,
+
+// Fire
+[KEY_SPACE] = DOOM_KEY_RCTRL,
+
+// Interact
+[KEY_E] = ' ',
+
+// Specially-defined keys
+[KEY_ENTER] = DOOM_KEY_ENTER,
+[KEY_ESC] = DOOM_KEY_ESCAPE,
+[KEY_TAB] = DOOM_KEY_TAB
 };
 
 
@@ -104,36 +130,9 @@ void GetAndSendUpdates() {
             event_.value >= 0 && 
             event_.value <= 2) 
         {
-            int doomKeyCode;
-            switch (event_.code) {
-                case KEY_UP:
-                case KEY_W:
-                    doomKeyCode = DOOM_KEY_UPARROW; 
-                    break;
-                case KEY_DOWN:
-                case KEY_S:
-                    doomKeyCode = DOOM_KEY_DOWNARROW; 
-                    break;
-                case KEY_LEFT:
-                case KEY_A:
-                    doomKeyCode = DOOM_KEY_LEFTARROW; 
-                    break;
-                case KEY_RIGHT:
-                case KEY_D:
-                    doomKeyCode = DOOM_KEY_RIGHTARROW; 
-                    break;
-                case KEY_ENTER:
-                    doomKeyCode = DOOM_KEY_ENTER; 
-                    break;
-                case KEY_ESC:
-                    doomKeyCode = DOOM_KEY_ESCAPE; 
-                    break;
-                case KEY_TAB:
-                    doomKeyCode = DOOM_KEY_TAB; 
-                    break;
-                default:
-                    doomKeyCode = event_.code;
-                    break;
+            int doomKeyCode = 0;
+            if (event_.code >= 0 && event_.code < 256) {
+                doomKeyCode = keyMap[event_.code];
             }
             printf("Got new event: %d-%s\n  -->Doom interpretation: %d\n", 
                 event_.code, 
@@ -153,6 +152,11 @@ void GetAndSendUpdates() {
 
 void I_InitGraphics (void) {
     printf("I_InitGraphics: enter\n");
+    int asd;
+    for (asd = 0; asd < 256; asd++) {
+        printf("%d ", keyMap[asd]);
+    }
+
     // Map FPGA virtual address ranges
     if ((fpga_fd = open_physical (fpga_fd)) == -1) {
         printf("I_InitGraphics: fail to open file to /dev/mem");
