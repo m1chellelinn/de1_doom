@@ -103,7 +103,7 @@ void I_ShutdownGraphics(void) {
 
 
 void I_SetPalette (byte* palette) {
-    printf("I_SetPalette: enter w/ usegamma=%d\n", usegamma);
+    // printf("I_SetPalette: enter w/ usegamma=%d\n", usegamma);
     byte c;
     int i;
 
@@ -112,23 +112,23 @@ void I_SetPalette (byte* palette) {
         c = gammatable[usegamma][*palette++];
         local_palette[(i*3)+PALETTE_R_OFFSET] = c >> 3; // VGA R 
         c = gammatable[usegamma][*palette++];
-        local_palette[(i*3)+PALETTE_G_OFFSET] = c >> 3;
+        local_palette[(i*3)+PALETTE_G_OFFSET] = c >> 2;
         c = gammatable[usegamma][*palette++];
         local_palette[(i*3)+PALETTE_B_OFFSET] = c >> 3;
     }
 
-    printf("\n\nINPUT PALETTE: \n");
-    for (i = 0; i < 256; i++) {
-        printf("%02X ", palette[i]);
-    }
+    // printf("\n\nINPUT PALETTE: \n");
+    // for (i = 0; i < 256; i++) {
+    //     printf("%02X ", palette[i]);
+    // }
 
     
-    printf("\n\nLOCAL PALETTE: \n");
-    for (i = 0; i < 256; i++) {
-        printf("%02X-", local_palette[(i*3)+PALETTE_R_OFFSET]);
-        printf("%02X-", local_palette[(i*3)+PALETTE_G_OFFSET]);
-        printf("%02X ", local_palette[(i*3)+PALETTE_B_OFFSET]);
-    }
+    // printf("\n\nLOCAL PALETTE: \n");
+    // for (i = 0; i < 256; i++) {
+    //     printf("%02X-", local_palette[(i*3)+PALETTE_R_OFFSET]);
+    //     printf("%02X-", local_palette[(i*3)+PALETTE_G_OFFSET]);
+    //     printf("%02X ", local_palette[(i*3)+PALETTE_B_OFFSET]);
+    // }
 
 
 }
@@ -136,7 +136,7 @@ void I_SetPalette (byte* palette) {
 void I_UpdateNoBlit (void) { }
 
 
-boolean printedScreenData = false;
+// boolean printedScreenData = false;
 
 void I_FinishUpdate (void) {
     // printf("I_FinishUpdate: invoke\n");
@@ -150,9 +150,9 @@ void I_FinishUpdate (void) {
             byte b = local_palette[(index*3)+PALETTE_B_OFFSET];
             WriteVgaPixel(x, y, r, g, b);
             
-            if (y==0 && !printedScreenData) {
-                printf("x=%d index=%d, r=%d, g=%d, b=%d\n", x, index, r, g, b);
-            }
+            // if (y==0 && !printedScreenData) {
+            //     printf("x=%d index=%d, r=%d, g=%d, b=%d\n", x, index, r, g, b);
+            // }
         }
     }
 
@@ -166,7 +166,7 @@ void I_FinishUpdate (void) {
     WriteVgaPixel(x++, y, 0x00, 0xFF, 0xFF);
     WriteVgaPixel(x++, y, 0xFF, 0x00, 0xFF);
     
-    printedScreenData = true;
+    // printedScreenData = true;
 }
 
 
