@@ -426,6 +426,7 @@ void G_BuildTiccmd (ticcmd_t* cmd)
  
     cmd->forwardmove += forward; 
     cmd->sidemove += side;
+    printf("  --> Final verdict: forward=%d, side=%d", cmd->forwardmove, cmd->sidemove);
     
     // special buttons
     if (sendpause) 
