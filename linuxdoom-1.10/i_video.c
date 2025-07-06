@@ -145,9 +145,9 @@ void I_FinishUpdate (void) {
     for (y = 0; y < SCREENHEIGHT; y++) {
         for (x = 0; x < SCREENWIDTH; x++) {
             byte index = screens[0][y * SCREENWIDTH + x];
-            byte r = local_palette[index+PALETTE_R_OFFSET];
-            byte g = local_palette[index+PALETTE_G_OFFSET];
-            byte b = local_palette[index+PALETTE_B_OFFSET];
+            byte r = local_palette[(index*3)+PALETTE_R_OFFSET];
+            byte g = local_palette[(index*3)+PALETTE_G_OFFSET];
+            byte b = local_palette[(index*3)+PALETTE_B_OFFSET];
             WriteVgaPixel(x, y, r, g, b);
             
             if (y==0 && !printedScreenData) {
