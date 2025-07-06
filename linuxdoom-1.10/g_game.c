@@ -279,15 +279,15 @@ void G_BuildTiccmd (ticcmd_t* cmd)
     { 
         if (gamekeydown[key_right]) 
         {
-            printf("Strafe right. speed = %d + %d", side, sidemove[speed]);
+            // printf("Strafe right. speed = %d + %d", side, sidemove[speed]);
             side += sidemove[speed]; 
-            printf(" = %d\n", side);
+            // printf(" = %d\n", side);
         }
         if (gamekeydown[key_left]) 
         {
-            printf("Strafe left. speed = %d - %d", side, sidemove[speed]);
+            // printf("Strafe left. speed = %d - %d", side, sidemove[speed]);
             side -= sidemove[speed]; 
-            printf(" = %d\n", side);
+            // printf(" = %d\n", side);
         }
         if (joyxmove > 0) 
             side += sidemove[speed]; 
@@ -309,15 +309,15 @@ void G_BuildTiccmd (ticcmd_t* cmd)
  
     if (gamekeydown[key_up]) 
     {
-        printf("Move up. speed = %d + %d", forward, forwardmove[speed]);
+        // printf("Move up. speed = %d + %d", forward, forwardmove[speed]);
         forward += forwardmove[speed]; 
-        printf(" = %d\n", forward);
+        // printf(" = %d\n", forward);
     }
     if (gamekeydown[key_down]) 
     {
-        printf("Move down. speed = %d - %d", forward, forwardmove[speed]);
+        // printf("Move down. speed = %d - %d", forward, forwardmove[speed]);
         forward -= forwardmove[speed]; 
-        printf(" = %d\n", forward);
+        // printf(" = %d\n", forward);
     }
 
     if (joyymove < 0) 
@@ -426,7 +426,7 @@ void G_BuildTiccmd (ticcmd_t* cmd)
  
     cmd->forwardmove += forward; 
     cmd->sidemove += side;
-    printf("  --> Final verdict: forward=%d, side=%d", cmd->forwardmove, cmd->sidemove);
+    // printf("  --> Final verdict: forward=%d, side=%d", cmd->forwardmove, cmd->sidemove);
     
     // special buttons
     if (sendpause) 
