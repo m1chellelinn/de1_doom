@@ -111,8 +111,11 @@ void GetAndSendUpdates() {
                 case KEY_TAB:
                     doomKeyCode = DOOM_KEY_TAB; 
                     break;
+                default:
+                    doomKeyCode = DOOM_KEY_RCTRL;
+                    break;
             }
-            printf("Got new event: %d-%s\n  -->Doom interpretation: %d", 
+            printf("Got new event: %d-%s\n  -->Doom interpretation: %d\n", 
                 event_.code, 
                 event_.value ? "ev_keydown" : "ev_keyup", 
                 doomKeyCode);
