@@ -66,6 +66,22 @@ ssize_t num_bytes_read;
 
 byte local_palette[256*3];
 
+static const int keyMap[] = {
+    [KEY_UP] = DOOM_KEY_UPARROW,
+    [KEY_W] = DOOM_KEY_UPARROW,
+    [KEY_DOWN] = DOOM_KEY_DOWNARROW,
+    [KEY_S] = DOOM_KEY_DOWNARROW,
+    [KEY_LEFT] = DOOM_KEY_LEFTARROW,
+    [KEY_A] = DOOM_KEY_LEFTARROW,
+    [KEY_RIGHT] = DOOM_KEY_RIGHTARROW,
+    [KEY_D] = DOOM_KEY_RIGHTARROW,
+    [KEY_ENTER] = DOOM_KEY_ENTER,
+    [KEY_ESC] = DOOM_KEY_ESCAPE,
+    [KEY_TAB] = DOOM_KEY_TAB
+};
+
+
+
 inline void WriteVgaPixel(int x, int y, byte r, byte g, byte b) {
     volatile uint16_t *vga_ptr = (uint16_t *) (
         (int)sram_v_addr + 
@@ -91,15 +107,19 @@ void GetAndSendUpdates() {
             int doomKeyCode;
             switch (event_.code) {
                 case KEY_UP:
+                case KEY_W:
                     doomKeyCode = DOOM_KEY_UPARROW; 
                     break;
                 case KEY_DOWN:
+                case KEY_S:
                     doomKeyCode = DOOM_KEY_DOWNARROW; 
                     break;
                 case KEY_LEFT:
+                case KEY_A:
                     doomKeyCode = DOOM_KEY_LEFTARROW; 
                     break;
                 case KEY_RIGHT:
+                case KEY_D:
                     doomKeyCode = DOOM_KEY_RIGHTARROW; 
                     break;
                 case KEY_ENTER:
