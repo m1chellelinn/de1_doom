@@ -139,6 +139,10 @@ void I_InitGraphics (void) {
         printf("Cannot open %s: %s.\n", dev, strerror(errno));
         return;
     }
+    // Use non-blocking read to process all available events and then exit
+    int flags = fcntl(keys_fd, F_GETFL, 0);
+    fcntl(keys_fd, F_SETFL, flags | O_NONBLOCK);
+    
     printf("Opened %s for reading", LINUX_KEYBOARD_EVENT_PATH);
 }
 
