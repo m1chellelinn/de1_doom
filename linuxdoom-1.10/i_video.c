@@ -80,12 +80,12 @@ void GetAndSendUpdates() {
 
     while ((num_bytes_read = read(keys_fd, &event_, sizeof event_)) > 0) {
         if (num_bytes_read != sizeof event_) {
-            printf("GetAndSendUpdates: invalid input read size");
+            printf("GetAndSendUpdates: invalid input read size\n");
             continue;
         }
 
         if (event_.type == EV_KEY && 
-            event_.value >  0 && 
+            event_.value >= 0 && 
             event_.value <= 2) 
         {
             printf("Got new event: %d-%s\n", event_.code, event_.value ? "ev_keydown" : "ev_keyup");
