@@ -280,6 +280,15 @@ typedef enum
 #define KEY_LALT	KEY_RALT
 
 
+#define LINUX_KEYBOARD_EVENT_PATH "/dev/input/event0"
+#define LINUX_KEY_UP 103
+#define LINUX_KEY_DOWN 108
+#define LINUX_KEY_LEFT 105
+#define LINUX_KEY_RIGHT 106
+#define LINUX_KEY_ENTER 28
+#define LINUX_KEY_ESC 1
+#define LINUX_KEY_TAB 15
+
 
 // DOOM basic types (boolean),
 //  and max/min values.

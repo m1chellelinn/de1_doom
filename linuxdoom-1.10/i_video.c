@@ -34,6 +34,8 @@ rcsid[] = "$Id: i_x.c,v 1.6 1997/02/03 22:45:10 b1 Exp $";
 #include <sys/types.h>
 #include <sys/socket.h>
 
+#include <fcntl.h>
+#include <linux/input.h>
 #include <netinet/in.h>
 #include <errno.h>
 #include <signal.h>
@@ -57,6 +59,11 @@ void *lw_v_addr = NULL;
 void *sram_v_addr = NULL;
 volatile int *led_ptr = NULL;
 
+int keys_fd = -1;
+const char *dev = LINUX_KEYBOARD_EVENT_PATH;
+struct input_event event_;
+ssize_t num_bytes_read;
+
 byte local_palette[256*3];
 
 inline void WriteVgaPixel(int x, int y, byte r, byte g, byte b) {
@@ -66,6 +73,45 @@ inline void WriteVgaPixel(int x, int y, byte r, byte g, byte b) {
         ((y+5) << VGA_ADDR_Y_OFFSET)
     );
     *vga_ptr = (r << VGA_R_OFFSET) | (g << VGA_G_OFFSET) | (b << VGA_B_OFFSET);
+}
+
+// NOTE: void D_PostEvent (event_t* ev);
+void GetAndSendUpdates() {
+
+    while ((num_bytes_read = read(keys_fd, &event_, sizeof event_)) > 0) {
+        if (num_bytes_read != sizeof event_) {
+            printf("GetAndSendUpdates: invalid input read size");
+            continue;
+        }
+
+        if (event_.type == EV_KEY && 
+            event_.value >  0 && 
+            event_.value <= 2) 
+        {
+            int doomKeyCode;
+            switch (event_.code) {
+                case LINUX_KEY_UP:
+                    doomKeyCode = KEY_UPARROW;
+                case LINUX_KEY_DOWN:
+                    doomKeyCode = KEY_DOWNARROW;
+                case LINUX_KEY_LEFT:
+                    doomKeyCode = KEY_LEFTARROW;
+                case LINUX_KEY_RIGHT:
+                    doomKeyCode = KEY_RIGHTARROW;
+                case LINUX_KEY_ENTER:
+                    doomKeyCode = KEY_ENTER;
+                case LINUX_KEY_ESC:
+                    doomKeyCode = KEY_ESC;
+                case LINUX_KEY_TAB:
+                    doomKeyCode = KEY_TAB;
+            }
+
+            event_t doomEvent;
+            doomEvent.data1 = doomKeyCode;
+            doomEvent.type = event_.value ? ev_keydown : ev_keyup;
+            D_PostEvent(&doomEvent); // This gets copied. We're fine.
+        }
+    }
 }
 
 
@@ -86,6 +132,14 @@ void I_InitGraphics (void) {
     }
     
     led_ptr = (int *) ( (int)lw_v_addr + LEDR_BASE);
+
+    
+    keys_fd = open(dev, O_RDONLY);
+    if (keys_fd == -1) {
+        printf("Cannot open %s: %s.\n", dev, strerror(errno));
+        return;
+    }
+    printf("Opened %s for reading", LINUX_KEYBOARD_EVENT_PATH);
 }
 
 
@@ -99,6 +153,7 @@ void I_ShutdownGraphics(void) {
     sram_v_addr = NULL;
     led_ptr = NULL;
     fpga_fd = -1;
+    keys_fd = -1; // let Linux auto-close this file
 }
 
 
@@ -139,7 +194,7 @@ void I_UpdateNoBlit (void) { }
 // boolean printedScreenData = false;
 
 void I_FinishUpdate (void) {
-    printf("I_FinishUpdate invoke\n");
+    // printf("I_FinishUpdate invoke\n");
     // printf("I_FinishUpdate: invoke\n");
     
     int x, y;
@@ -182,7 +237,7 @@ void I_ReadScreen (byte* scr) {
 //
 void I_StartFrame (void)
 {
-    printf("I_StartFrame invoke\n");
+    // printf("I_StartFrame invoke\n");
     // er?
 }
 
@@ -192,32 +247,5 @@ void I_StartFrame (void)
 //
 void I_StartTic (void)
 {
-    printf("I_StartTic invoke\n");
-
-    // if (!X_display)
-	// return;
-
-    // while (XPending(X_display))
-	// I_GetEvent();
-
-    // // Warp the pointer back to the middle of the window
-    // //  or it will wander off - that is, the game will
-    // //  loose input focus within X11.
-    // if (grabMouse)
-    // {
-	// if (!--doPointerWarp)
-	// {
-	//     XWarpPointer( X_display,
-	// 		  None,
-	// 		  X_mainWindow,
-	// 		  0, 0,
-	// 		  0, 0,
-	// 		  X_width/2, X_height/2);
-
-	//     doPointerWarp = POINTER_WARP_COUNTDOWN;
-	// }
-    // }
-
-    // mousemoved = false;
-
+    GetAndSendUpdates();
 }
