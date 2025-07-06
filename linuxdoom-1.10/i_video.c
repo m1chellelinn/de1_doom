@@ -112,7 +112,7 @@ void GetAndSendUpdates() {
                     doomKeyCode = DOOM_KEY_TAB; 
                     break;
                 default:
-                    doomKeyCode = DOOM_KEY_RCTRL;
+                    doomKeyCode = event_.code;
                     break;
             }
             printf("Got new event: %d-%s\n  -->Doom interpretation: %d\n", 
