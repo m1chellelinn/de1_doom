@@ -101,52 +101,52 @@ int xlatekey(void)
 
     switch(rc = XKeycodeToKeysym(X_display, X_event.xkey.keycode, 0))
     {
-      case XK_Left:	rc = KEY_LEFTARROW;	break;
-      case XK_Right:	rc = KEY_RIGHTARROW;	break;
-      case XK_Down:	rc = KEY_DOWNARROW;	break;
-      case XK_Up:	rc = KEY_UPARROW;	break;
-      case XK_Escape:	rc = KEY_ESCAPE;	break;
-      case XK_Return:	rc = KEY_ENTER;		break;
-      case XK_Tab:	rc = KEY_TAB;		break;
-      case XK_F1:	rc = KEY_F1;		break;
-      case XK_F2:	rc = KEY_F2;		break;
-      case XK_F3:	rc = KEY_F3;		break;
-      case XK_F4:	rc = KEY_F4;		break;
-      case XK_F5:	rc = KEY_F5;		break;
-      case XK_F6:	rc = KEY_F6;		break;
-      case XK_F7:	rc = KEY_F7;		break;
-      case XK_F8:	rc = KEY_F8;		break;
-      case XK_F9:	rc = KEY_F9;		break;
-      case XK_F10:	rc = KEY_F10;		break;
-      case XK_F11:	rc = KEY_F11;		break;
-      case XK_F12:	rc = KEY_F12;		break;
+      case XK_Left:	rc = DOOM_KEY_LEFTARROW;	break;
+      case XK_Right:	rc = DOOM_KEY_RIGHTARROW;	break;
+      case XK_Down:	rc = DOOM_KEY_DOWNARROW;	break;
+      case XK_Up:	rc = DOOM_KEY_UPARROW;	break;
+      case XK_Escape:	rc = DOOM_KEY_ESCAPE;	break;
+      case XK_Return:	rc = DOOM_KEY_ENTER;		break;
+      case XK_Tab:	rc = DOOM_KEY_TAB;		break;
+      case XK_F1:	rc = DOOM_KEY_F1;		break;
+      case XK_F2:	rc = DOOM_KEY_F2;		break;
+      case XK_F3:	rc = DOOM_KEY_F3;		break;
+      case XK_F4:	rc = DOOM_KEY_F4;		break;
+      case XK_F5:	rc = DOOM_KEY_F5;		break;
+      case XK_F6:	rc = DOOM_KEY_F6;		break;
+      case XK_F7:	rc = DOOM_KEY_F7;		break;
+      case XK_F8:	rc = DOOM_KEY_F8;		break;
+      case XK_F9:	rc = DOOM_KEY_F9;		break;
+      case XK_F10:	rc = DOOM_KEY_F10;		break;
+      case XK_F11:	rc = DOOM_KEY_F11;		break;
+      case XK_F12:	rc = DOOM_KEY_F12;		break;
 	
       case XK_BackSpace:
-      case XK_Delete:	rc = KEY_BACKSPACE;	break;
+      case XK_Delete:	rc = DOOM_KEY_BACKSPACE;	break;
 
-      case XK_Pause:	rc = KEY_PAUSE;		break;
+      case XK_Pause:	rc = DOOM_KEY_PAUSE;		break;
 
       case XK_KP_Equal:
-      case XK_equal:	rc = KEY_EQUALS;	break;
+      case XK_equal:	rc = DOOM_KEY_EQUALS;	break;
 
       case XK_KP_Subtract:
-      case XK_minus:	rc = KEY_MINUS;		break;
+      case XK_minus:	rc = DOOM_KEY_MINUS;		break;
 
       case XK_Shift_L:
       case XK_Shift_R:
-	rc = KEY_RSHIFT;
+	rc = DOOM_KEY_RSHIFT;
 	break;
 	
       case XK_Control_L:
       case XK_Control_R:
-	rc = KEY_RCTRL;
+	rc = DOOM_KEY_RCTRL;
 	break;
 	
       case XK_Alt_L:
       case XK_Meta_L:
       case XK_Alt_R:
       case XK_Meta_R:
-	rc = KEY_RALT;
+	rc = DOOM_KEY_RALT;
 	break;
 	
       default:

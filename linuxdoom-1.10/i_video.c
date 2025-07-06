@@ -88,22 +88,23 @@ void GetAndSendUpdates() {
             event_.value >  0 && 
             event_.value <= 2) 
         {
+            printf("Got new event: %d-%s\n", event_.code, event_.value ? "ev_keydown" : "ev_keyup");
             int doomKeyCode;
             switch (event_.code) {
-                case LINUX_KEY_UP:
-                    doomKeyCode = KEY_UPARROW;
-                case LINUX_KEY_DOWN:
-                    doomKeyCode = KEY_DOWNARROW;
-                case LINUX_KEY_LEFT:
-                    doomKeyCode = KEY_LEFTARROW;
-                case LINUX_KEY_RIGHT:
-                    doomKeyCode = KEY_RIGHTARROW;
-                case LINUX_KEY_ENTER:
-                    doomKeyCode = KEY_ENTER;
-                case LINUX_KEY_ESC:
-                    doomKeyCode = KEY_ESC;
-                case LINUX_KEY_TAB:
-                    doomKeyCode = KEY_TAB;
+                case LINUX_DOOM_KEY_UP:
+                    doomKeyCode = DOOM_KEY_UPARROW;
+                case LINUX_DOOM_KEY_DOWN:
+                    doomKeyCode = DOOM_KEY_DOWNARROW;
+                case LINUX_DOOM_KEY_LEFT:
+                    doomKeyCode = DOOM_KEY_LEFTARROW;
+                case LINUX_DOOM_KEY_RIGHT:
+                    doomKeyCode = DOOM_KEY_RIGHTARROW;
+                case LINUX_DOOM_KEY_ENTER:
+                    doomKeyCode = DOOM_KEY_ENTER;
+                case LINUX_DOOM_KEY_ESC:
+                    doomKeyCode = DOOM_KEY_ESCAPE;
+                case LINUX_DOOM_KEY_TAB:
+                    doomKeyCode = DOOM_KEY_TAB;
             }
 
             event_t doomEvent;
@@ -142,7 +143,7 @@ void I_InitGraphics (void) {
     // Use non-blocking read to process all available events and then exit
     int flags = fcntl(keys_fd, F_GETFL, 0);
     fcntl(keys_fd, F_SETFL, flags | O_NONBLOCK);
-    
+
     printf("Opened %s for reading", LINUX_KEYBOARD_EVENT_PATH);
 }
 

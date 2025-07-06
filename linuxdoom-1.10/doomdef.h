@@ -247,47 +247,47 @@ typedef enum
 // This is the stuff configured by Setup.Exe.
 // Most key data are simple ascii (uppercased).
 //
-#define KEY_RIGHTARROW	0xae
-#define KEY_LEFTARROW	0xac
-#define KEY_UPARROW	0xad
-#define KEY_DOWNARROW	0xaf
-#define KEY_ESCAPE	27
-#define KEY_ENTER	13
-#define KEY_TAB		9
-#define KEY_F1		(0x80+0x3b)
-#define KEY_F2		(0x80+0x3c)
-#define KEY_F3		(0x80+0x3d)
-#define KEY_F4		(0x80+0x3e)
-#define KEY_F5		(0x80+0x3f)
-#define KEY_F6		(0x80+0x40)
-#define KEY_F7		(0x80+0x41)
-#define KEY_F8		(0x80+0x42)
-#define KEY_F9		(0x80+0x43)
-#define KEY_F10		(0x80+0x44)
-#define KEY_F11		(0x80+0x57)
-#define KEY_F12		(0x80+0x58)
+#define DOOM_KEY_RIGHTARROW	0xae
+#define DOOM_KEY_LEFTARROW	0xac
+#define DOOM_KEY_UPARROW	0xad
+#define DOOM_KEY_DOWNARROW	0xaf
+#define DOOM_KEY_ESCAPE	27
+#define DOOM_KEY_ENTER	13
+#define DOOM_KEY_TAB		9
+#define DOOM_KEY_F1		(0x80+0x3b)
+#define DOOM_KEY_F2		(0x80+0x3c)
+#define DOOM_KEY_F3		(0x80+0x3d)
+#define DOOM_KEY_F4		(0x80+0x3e)
+#define DOOM_KEY_F5		(0x80+0x3f)
+#define DOOM_KEY_F6		(0x80+0x40)
+#define DOOM_KEY_F7		(0x80+0x41)
+#define DOOM_KEY_F8		(0x80+0x42)
+#define DOOM_KEY_F9		(0x80+0x43)
+#define DOOM_KEY_F10		(0x80+0x44)
+#define DOOM_KEY_F11		(0x80+0x57)
+#define DOOM_KEY_F12		(0x80+0x58)
 
-#define KEY_BACKSPACE	127
-#define KEY_PAUSE	0xff
+#define DOOM_KEY_BACKSPACE	127
+#define DOOM_KEY_PAUSE	0xff
 
-#define KEY_EQUALS	0x3d
-#define KEY_MINUS	0x2d
+#define DOOM_KEY_EQUALS	0x3d
+#define DOOM_KEY_MINUS	0x2d
 
-#define KEY_RSHIFT	(0x80+0x36)
-#define KEY_RCTRL	(0x80+0x1d)
-#define KEY_RALT	(0x80+0x38)
+#define DOOM_KEY_RSHIFT	(0x80+0x36)
+#define DOOM_KEY_RCTRL	(0x80+0x1d)
+#define DOOM_KEY_RALT	(0x80+0x38)
 
-#define KEY_LALT	KEY_RALT
+#define DOOM_KEY_LALT	DOOM_KEY_RALT
 
 
 #define LINUX_KEYBOARD_EVENT_PATH "/dev/input/event0"
-#define LINUX_KEY_UP 103
-#define LINUX_KEY_DOWN 108
-#define LINUX_KEY_LEFT 105
-#define LINUX_KEY_RIGHT 106
-#define LINUX_KEY_ENTER 28
-#define LINUX_KEY_ESC 1
-#define LINUX_KEY_TAB 15
+#define LINUX_DOOM_KEY_UP 103
+#define LINUX_DOOM_KEY_DOWN 108
+#define LINUX_DOOM_KEY_LEFT 105
+#define LINUX_DOOM_KEY_RIGHT 106
+#define LINUX_DOOM_KEY_ENTER 28
+#define LINUX_DOOM_KEY_ESC 1
+#define LINUX_DOOM_KEY_TAB 15
 
 
 // DOOM basic types (boolean),
