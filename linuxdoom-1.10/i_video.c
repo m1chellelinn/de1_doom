@@ -166,7 +166,7 @@ void I_FinishUpdate (void) {
     WriteVgaPixel(x++, y, 0x00, 0xFF, 0xFF);
     WriteVgaPixel(x++, y, 0xFF, 0x00, 0xFF);
     
-    // printedScreenData = true;
+    printedScreenData = true;
 }
 
 
