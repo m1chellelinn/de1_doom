@@ -101,7 +101,6 @@ void I_ShutdownGraphics(void) {
     fpga_fd = -1;
 }
 
-boolean printedScreenData = false;
 
 void I_SetPalette (byte* palette) {
     printf("I_SetPalette: enter w/ usegamma=%d\n", usegamma);
@@ -137,9 +136,11 @@ void I_SetPalette (byte* palette) {
 void I_UpdateNoBlit (void) { }
 
 
-void I_FinishUpdate (void) {
-    // printf("I_FinishUpdate: invoke");
+boolean printedScreenData = false;
 
+void I_FinishUpdate (void) {
+    printf("I_FinishUpdate: invoke\n");
+    
     int x, y;
     for (y = 0; y < SCREENHEIGHT; y++) {
         for (x = 0; x < SCREENWIDTH; x++) {
@@ -147,10 +148,11 @@ void I_FinishUpdate (void) {
             byte r = local_palette[index+PALETTE_R_OFFSET];
             byte g = local_palette[index+PALETTE_G_OFFSET];
             byte b = local_palette[index+PALETTE_B_OFFSET];
-            // if (!printedScreenData) {
-            //     printf("(%d, %d): {%d, %d, %d}\n", x, y, r, g, b);
-            // }
             WriteVgaPixel(x, y, r, g, b);
+            
+            if (y==0 && !printedScreenData) {
+                printf("x=%d index=%d, r=%d, g=%d, b=%d\n", x, index, r, g, b);
+            }
         }
     }
 
