@@ -1,5 +1,6 @@
 build/*
 linuxdoom-1.10/build/*
 .vscode/*
+text_files/*
 
 !linuxdoom-1.10/build/doom1.wad
