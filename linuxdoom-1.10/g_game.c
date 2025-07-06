@@ -265,77 +265,82 @@ void G_BuildTiccmd (ticcmd_t* cmd)
 	|| joyxmove > 0  
 	|| gamekeydown[key_right]
 	|| gamekeydown[key_left]) 
-	turnheld += ticdup; 
+	    turnheld += ticdup; 
     else 
-	turnheld = 0; 
+	    turnheld = 0; 
 
     if (turnheld < SLOWTURNTICS) 
-	tspeed = 2;             // slow turn 
+	    tspeed = 2;             // slow turn 
     else 
-	tspeed = speed;
+	    tspeed = speed;
     
     // let movement keys cancel each other out
     if (strafe) 
     { 
-	if (gamekeydown[key_right]) 
-	{
-	    // fprintf(stderr, "strafe right\n");
-	    side += sidemove[speed]; 
-	}
-	if (gamekeydown[key_left]) 
-	{
-	    //	fprintf(stderr, "strafe left\n");
-	    side -= sidemove[speed]; 
-	}
-	if (joyxmove > 0) 
-	    side += sidemove[speed]; 
-	if (joyxmove < 0) 
-	    side -= sidemove[speed]; 
+        if (gamekeydown[key_right]) 
+        {
+            printf("Strafe right. speed = %d + %d", side, sidemove[speed]);
+            side += sidemove[speed]; 
+            printf(" = %d\n", side);
+        }
+        if (gamekeydown[key_left]) 
+        {
+            printf("Strafe left. speed = %d - %d", side, sidemove[speed]);
+            side -= sidemove[speed]; 
+            printf(" = %d\n", side);
+        }
+        if (joyxmove > 0) 
+            side += sidemove[speed]; 
+        if (joyxmove < 0) 
+            side -= sidemove[speed]; 
  
     } 
     else 
     { 
-	if (gamekeydown[key_right]) 
-	    cmd->angleturn -= angleturn[tspeed]; 
-	if (gamekeydown[key_left]) 
-	    cmd->angleturn += angleturn[tspeed]; 
-	if (joyxmove > 0) 
-	    cmd->angleturn -= angleturn[tspeed]; 
-	if (joyxmove < 0) 
-	    cmd->angleturn += angleturn[tspeed]; 
+        if (gamekeydown[key_right]) 
+            cmd->angleturn -= angleturn[tspeed]; 
+        if (gamekeydown[key_left]) 
+            cmd->angleturn += angleturn[tspeed]; 
+        if (joyxmove > 0) 
+            cmd->angleturn -= angleturn[tspeed]; 
+        if (joyxmove < 0) 
+            cmd->angleturn += angleturn[tspeed]; 
     } 
  
     if (gamekeydown[key_up]) 
     {
-	// fprintf(stderr, "up\n");
-	forward += forwardmove[speed]; 
+        printf("Move up. speed = %d + %d", forward, forwardmove[speed]);
+        forward += forwardmove[speed]; 
+        printf(" = %d\n", forward);
     }
     if (gamekeydown[key_down]) 
     {
-	// fprintf(stderr, "down\n");
-	forward -= forwardmove[speed]; 
+        printf("Move down. speed = %d - %d", forward, forwardmove[speed]);
+        forward -= forwardmove[speed]; 
+        printf(" = %d\n", forward);
     }
+
     if (joyymove < 0) 
-	forward += forwardmove[speed]; 
+	    forward += forwardmove[speed]; 
     if (joyymove > 0) 
-	forward -= forwardmove[speed]; 
+	    forward -= forwardmove[speed]; 
     if (gamekeydown[key_straferight]) 
-	side += sidemove[speed]; 
+	    side += sidemove[speed]; 
     if (gamekeydown[key_strafeleft]) 
-	side -= sidemove[speed];
+	    side -= sidemove[speed];
     
     // buttons
     cmd->chatchar = HU_dequeueChatChar(); 
  
     if (gamekeydown[key_fire] || mousebuttons[mousebfire] 
 	|| joybuttons[joybfire]) 
-	cmd->buttons |= BT_ATTACK; 
+	    cmd->buttons |= BT_ATTACK; 
  
     if (gamekeydown[key_use] || joybuttons[joybuse] ) 
     { 
-	cmd->buttons |= BT_USE;
-	// clear double clicks if hit use button 
-	dclicks = 0;                   
+        cmd->buttons |= BT_USE;
+        // clear double clicks if hit use button 
+        dclicks = 0;                   
     } 
 
     // chainsaw overrides 
