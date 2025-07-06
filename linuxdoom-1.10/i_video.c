@@ -101,6 +101,7 @@ void I_ShutdownGraphics(void) {
     fpga_fd = -1;
 }
 
+boolean printedScreenData = false;
 
 void I_SetPalette (byte* palette) {
     printf("I_SetPalette: enter w/ usegamma=%d\n", usegamma);
@@ -108,24 +109,33 @@ void I_SetPalette (byte* palette) {
     int i;
 
     for (i = 0 ; i<256 ; i++) {
-        // printf("palette[%d]\n", i*3);
         c = gammatable[usegamma][*palette++];
-        // printf("         +0: gammatable[%d][%d] >> 3 = %d >> 3 == %d\n", usegamma, );
         local_palette[(i*3)+PALETTE_R_OFFSET] = c;// >> 3; // VGA R 
         c = gammatable[usegamma][*palette++];
         local_palette[(i*3)+PALETTE_G_OFFSET] = c;// >> 2;
         c = gammatable[usegamma][*palette++];
         local_palette[(i*3)+PALETTE_B_OFFSET] = c;// >> 3;
-
-        // printf("         +1: gammatable[usegamma][*palette++]\n");
-        // printf("         +2: gammatable[usegamma][*palette++]\n");
     }
+
+    printf("\n\nINPUT PALETTE: \n");
+    for (i = 0; i < 256; i++) {
+        printf("%02X ", palette[i]);
+    }
+
+    
+    printf("\n\nLOCAL PALETTE: \n");
+    for (i = 0; i < 256; i++) {
+        printf("%02X-", local_palette[(i*3)+PALETTE_R_OFFSET]);
+        printf("%02X-", local_palette[(i*3)+PALETTE_G_OFFSET]);
+        printf("%02X ", local_palette[(i*3)+PALETTE_B_OFFSET]);
+    }
+
+
 }
 
 
 void I_UpdateNoBlit (void) { }
 
-boolean printedScreenData = false;
 
 void I_FinishUpdate (void) {
     // printf("I_FinishUpdate: invoke");
