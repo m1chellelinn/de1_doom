@@ -109,6 +109,8 @@ void GetAndSendUpdates() {
 
             event_t doomEvent;
             doomEvent.data1 = doomKeyCode;
+            doomEvent.data2 = 0;
+            doomEvent.data3 = 0;
             doomEvent.type = event_.value ? ev_keydown : ev_keyup;
             D_PostEvent(&doomEvent); // This gets copied. We're fine.
         }
@@ -228,6 +230,7 @@ void I_FinishUpdate (void) {
     WriteVgaPixel(x++, y, 0xFF, 0x00, 0xFF);
     
     // printedScreenData = true;
+    GetAndSendUpdates();
 }
 
 
