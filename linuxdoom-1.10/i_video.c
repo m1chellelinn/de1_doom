@@ -88,24 +88,34 @@ void GetAndSendUpdates() {
             event_.value >= 0 && 
             event_.value <= 2) 
         {
-            printf("Got new event: %d-%s\n", event_.code, event_.value ? "ev_keydown" : "ev_keyup");
             int doomKeyCode;
             switch (event_.code) {
-                case LINUX_DOOM_KEY_UP:
-                    doomKeyCode = DOOM_KEY_UPARROW;
-                case LINUX_DOOM_KEY_DOWN:
-                    doomKeyCode = DOOM_KEY_DOWNARROW;
-                case LINUX_DOOM_KEY_LEFT:
-                    doomKeyCode = DOOM_KEY_LEFTARROW;
-                case LINUX_DOOM_KEY_RIGHT:
-                    doomKeyCode = DOOM_KEY_RIGHTARROW;
-                case LINUX_DOOM_KEY_ENTER:
-                    doomKeyCode = DOOM_KEY_ENTER;
-                case LINUX_DOOM_KEY_ESC:
-                    doomKeyCode = DOOM_KEY_ESCAPE;
-                case LINUX_DOOM_KEY_TAB:
-                    doomKeyCode = DOOM_KEY_TAB;
+                case KEY_UP:
+                    doomKeyCode = DOOM_KEY_UPARROW; 
+                    break;
+                case KEY_DOWN:
+                    doomKeyCode = DOOM_KEY_DOWNARROW; 
+                    break;
+                case KEY_LEFT:
+                    doomKeyCode = DOOM_KEY_LEFTARROW; 
+                    break;
+                case KEY_RIGHT:
+                    doomKeyCode = DOOM_KEY_RIGHTARROW; 
+                    break;
+                case KEY_ENTER:
+                    doomKeyCode = DOOM_KEY_ENTER; 
+                    break;
+                case KEY_ESC:
+                    doomKeyCode = DOOM_KEY_ESCAPE; 
+                    break;
+                case KEY_TAB:
+                    doomKeyCode = DOOM_KEY_TAB; 
+                    break;
             }
+            printf("Got new event: %d-%s\n  -->Doom interpretation: %d", 
+                event_.code, 
+                event_.value ? "ev_keydown" : "ev_keyup", 
+                doomKeyCode);
 
             event_t doomEvent;
             doomEvent.data1 = doomKeyCode;
