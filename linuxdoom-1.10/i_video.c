@@ -139,6 +139,7 @@ void I_UpdateNoBlit (void) { }
 // boolean printedScreenData = false;
 
 void I_FinishUpdate (void) {
+    printf("I_FinishUpdate invoke\n");
     // printf("I_FinishUpdate: invoke\n");
     
     int x, y;
@@ -181,6 +182,7 @@ void I_ReadScreen (byte* scr) {
 //
 void I_StartFrame (void)
 {
+    printf("I_StartFrame invoke\n");
     // er?
 }
 
@@ -190,6 +192,7 @@ void I_StartFrame (void)
 //
 void I_StartTic (void)
 {
+    printf("I_StartTic invoke\n");
 
     // if (!X_display)
 	// return;
