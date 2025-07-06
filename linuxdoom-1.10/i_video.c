@@ -111,11 +111,11 @@ void I_SetPalette (byte* palette) {
         // printf("palette[%d]\n", i*3);
         c = gammatable[usegamma][*palette++];
         // printf("         +0: gammatable[%d][%d] >> 3 = %d >> 3 == %d\n", usegamma, );
-        local_palette[(i*3)+PALETTE_R_OFFSET] = c >> 3; // VGA R 
+        local_palette[(i*3)+PALETTE_R_OFFSET] = c;// >> 3; // VGA R 
         c = gammatable[usegamma][*palette++];
-        local_palette[(i*3)+PALETTE_G_OFFSET] = c >> 2;
+        local_palette[(i*3)+PALETTE_G_OFFSET] = c;// >> 2;
         c = gammatable[usegamma][*palette++];
-        local_palette[(i*3)+PALETTE_B_OFFSET] = c >> 3;
+        local_palette[(i*3)+PALETTE_B_OFFSET] = c;// >> 3;
 
         // printf("         +1: gammatable[usegamma][*palette++]\n");
         // printf("         +2: gammatable[usegamma][*palette++]\n");
