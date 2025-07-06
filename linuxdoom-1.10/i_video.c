@@ -67,43 +67,46 @@ ssize_t num_bytes_read;
 byte local_palette[256*3];
 
 static int keyMap[256] = {
-// Weapons
-[KEY_1] = '1',
-[KEY_2] = '2',
-[KEY_3] = '3',
-[KEY_4] = '4',
-[KEY_5] = '5',
-[KEY_6] = '6',
-[KEY_7] = '7',
+    // Weapons
+    [KEY_1] = '1',
+    [KEY_2] = '2',
+    [KEY_3] = '3',
+    [KEY_4] = '4',
+    [KEY_5] = '5',
+    [KEY_6] = '6',
+    [KEY_7] = '7',
 
-// Map
-[KEY_F] = 'F',
-[KEY_M] = 'M',
-[KEY_C] = 'C',
-[KEY_O] = 'O',
-[KEY_MINUS] = '-',
-[KEY_EQUAL] = '+',
+    // Map
+    [KEY_F] = 'F',
+    [KEY_M] = 'M',
+    [KEY_C] = 'C',
+    [KEY_O] = 'O',
+    [KEY_MINUS] = '-',
+    [KEY_EQUAL] = '+',
 
-// Movement
-[KEY_W] = DOOM_KEY_UPARROW,
-[KEY_A] = DOOM_KEY_LEFTARROW,
-[KEY_S] = DOOM_KEY_DOWNARROW,
-[KEY_D] = DOOM_KEY_RIGHTARROW,
-[KEY_UP] = DOOM_KEY_UPARROW,
-[KEY_LEFT] = DOOM_KEY_LEFTARROW,
-[KEY_DOWN] = DOOM_KEY_DOWNARROW,
-[KEY_RIGHT] = DOOM_KEY_RIGHTARROW,
+    // Movement
+    [KEY_W] = DOOM_KEY_UPARROW,
+    [KEY_A] = DOOM_KEY_LEFTARROW,
+    [KEY_S] = DOOM_KEY_DOWNARROW,
+    [KEY_D] = DOOM_KEY_RIGHTARROW,
+    [KEY_UP] = DOOM_KEY_UPARROW,
+    [KEY_LEFT] = DOOM_KEY_LEFTARROW,
+    [KEY_DOWN] = DOOM_KEY_DOWNARROW,
+    [KEY_RIGHT] = DOOM_KEY_RIGHTARROW,
 
-// Fire
-[KEY_SPACE] = DOOM_KEY_RCTRL,
+    // Fire
+    [KEY_SPACE] = DOOM_KEY_RCTRL,
 
-// Interact
-[KEY_E] = ' ',
+    // Interact
+    [KEY_E] = ' ',
 
-// Specially-defined keys
-[KEY_ENTER] = DOOM_KEY_ENTER,
-[KEY_ESC] = DOOM_KEY_ESCAPE,
-[KEY_TAB] = DOOM_KEY_TAB
+    // Specially-defined keys
+    [KEY_ENTER] = DOOM_KEY_ENTER,
+    [KEY_ESC] = DOOM_KEY_ESCAPE,
+    [KEY_TAB] = DOOM_KEY_TAB,
+
+    // Quitting the game
+    [KEY_Y] = 'Y'
 };
 
 
