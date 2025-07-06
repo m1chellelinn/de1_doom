@@ -1171,8 +1171,8 @@ void D_DoomMain (void)
 			autostart ? "true" : "false",
 			netgame ? "true" : "false");
 	
-	// printf("\n\nASSERTING autostart=true!\n\n");
-	// autostart = true;
+	printf("\n\nASSERTING autostart=true!\n\n");
+	autostart = true;
 	
     if ( gameaction != ga_loadgame )
     {
