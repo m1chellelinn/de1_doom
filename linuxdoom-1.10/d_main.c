@@ -370,7 +370,6 @@ void D_DoomLoop (void)
 	debugfile = fopen (filename,"w");
     }
 	
-    I_InitGraphics ();
 
     while (1)
     {
@@ -1018,6 +1017,9 @@ void D_DoomMain (void)
     }
     
     // init subsystems
+	printf ("I_InitGraphics: initialize hardware");
+    I_InitGraphics ();
+
     printf ("V_Init: allocate screens.\n");
     V_Init ();
 
