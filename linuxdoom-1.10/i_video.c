@@ -150,10 +150,6 @@ void GetAndSendUpdates() {
 
 void I_InitGraphics (void) {
     printf("I_InitGraphics: enter\n");
-    int asd;
-    for (asd = 0; asd < 256; asd++) {
-        printf("%d ", keyMap[asd]);
-    }
 
     // Map FPGA virtual address ranges
     if ((mmap_fd = open_physical (mmap_fd)) == -1) {
@@ -177,9 +173,11 @@ void I_InitGraphics (void) {
     led_ptr = (int *) ( (int)lw_v_addr + LEDR_BASE);
     doom_ptr = (int *) ( (int)lw_v_addr + DOOM_DRIVER_BASE);
 
+    printf("Calling FPGA debug function\n");
     *(doom_ptr+1) = DDR_BASE + 0x30000000;
     *(doom_ptr) = CMD_V_Init;
 
+    printf("Getting FPGA-written data??\n");
     int i;
     while (1) {
         printf("Contents of 0x3000,0000: ");
