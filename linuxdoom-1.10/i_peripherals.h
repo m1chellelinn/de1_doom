@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include <doomtype.h>
+#include "doomtype.h"
 
 extern int mmap_fd;
 extern volatile void *lw_v_addr;
