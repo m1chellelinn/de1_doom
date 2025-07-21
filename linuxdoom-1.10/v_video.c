@@ -138,6 +138,7 @@ int	usegamma;
 			 
 //
 // V_MarkRect 
+// This is the useless one
 // 
 void
 V_MarkRect
@@ -195,6 +196,7 @@ V_CopyRect
     } 
 } 
  
+int largestWidth = 0;
 
 //
 // V_DrawPatch
@@ -207,6 +209,10 @@ V_DrawPatch
   int		scrn,
   patch_t*	patch ) 
 { 
+    if (patch->width > largestWidth) {
+        largestWidth = patch->width;
+        printf("V_DrawPatch: NEW LARGEST WIDTH: %d", largestWidth);
+    }
 
     int		count;
     int		col; 
@@ -233,32 +239,32 @@ V_DrawPatch
 #endif 
  
     if (!scrn)
-	V_MarkRect (x, y, SHORT(patch->width), SHORT(patch->height)); 
+	// V_MarkRect (x, y, SHORT(patch->width), SHORT(patch->height)); 
 
     col = 0; 
     desttop = screens[scrn]+y*SCREENWIDTH+x; 
 	 
     w = SHORT(patch->width); 
 
-    for ( ; col<w ; x++, col++, desttop++)
+    for ( /* Nothing */; col<w; x++, col++, desttop++)
     { 
-	column = (column_t *)((byte *)patch + LONG(patch->columnofs[col])); 
- 
-	// step through the posts in a column 
-	while (column->topdelta != 0xff ) 
-	{ 
-	    source = (byte *)column + 3; 
-	    dest = desttop + column->topdelta*SCREENWIDTH; 
-	    count = column->length; 
-			 
-	    while (count--) 
-	    { 
-		*dest = *source++; 
-		dest += SCREENWIDTH; 
-	    } 
-	    column = (column_t *)(  (byte *)column + column->length 
-				    + 4 ); 
-	} 
+        column = (column_t *)((byte *)patch + LONG(patch->columnofs[col])); 
+    
+        // step through the posts in a column 
+        while (column->topdelta != 0xff ) 
+        { 
+            source = (byte *)column + 3; 
+            dest = desttop + column->topdelta*SCREENWIDTH; 
+            count = column->length; 
+                
+            while (count--) 
+            { 
+            *dest = *source++; 
+            dest += SCREENWIDTH; 
+            } 
+            column = (column_t *)(  (byte *)column + column->length 
+                        + 4 ); 
+        } 
     }			 
 } 
  

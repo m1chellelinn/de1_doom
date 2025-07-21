@@ -24,10 +24,10 @@ static const char
 rcsid[] = "$Id: m_bbox.c,v 1.1 1997/02/03 22:45:10 b1 Exp $";
 
 
+#include <fcntl.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
 #include <stdarg.h>
 #include <sys/time.h>
 #include <unistd.h>
@@ -45,6 +45,8 @@ rcsid[] = "$Id: m_bbox.c,v 1.1 1997/02/03 22:45:10 b1 Exp $";
 #endif
 #include "i_system.h"
 
+#include "i_address_map.h"
+#include "i_peripherals.h"
 
 
 
@@ -76,7 +78,8 @@ int  I_GetHeapSize (void)
 byte* I_ZoneBase (int*	size)
 {
     *size = mb_used*1024*1024;
-    return (byte *) malloc (*size);
+    
+    return ddr_v_addr;  // Assume I_ZoneBase (Z_Init) is called after I_InitGraphics
 }
 
 

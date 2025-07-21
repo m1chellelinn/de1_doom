@@ -1,7 +1,9 @@
+#include <i_peripherals.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <sys/mman.h>
+
 
 int open_physical (int fd) {
     if (fd == -1) // check if already open

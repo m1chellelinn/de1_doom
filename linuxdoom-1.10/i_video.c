@@ -40,24 +40,18 @@ rcsid[] = "$Id: i_x.c,v 1.6 1997/02/03 22:45:10 b1 Exp $";
 #include <errno.h>
 #include <signal.h>
 
+#include "doomdef.h"
 #include "doomstat.h"
-#include "i_address_map.h"
 #include "i_consts.h"
-#include "i_peripherals.h"
 #include "i_system.h"
 #include "v_video.h"
 #include "m_argv.h"
 #include "d_main.h"
 
-#include "doomdef.h"
 #include "i_address_map.h"
+#include "i_peripherals.h"
 
 #define POINTER_WARP_COUNTDOWN	1
-
-int fpga_fd = -1;
-void *lw_v_addr = NULL;
-void *sram_v_addr = NULL;
-volatile int *led_ptr = NULL;
 
 int keys_fd = -1;
 const char *dev = LINUX_KEYBOARD_EVENT_PATH;
@@ -162,20 +156,40 @@ void I_InitGraphics (void) {
     }
 
     // Map FPGA virtual address ranges
-    if ((fpga_fd = open_physical (fpga_fd)) == -1) {
+    if ((mmap_fd = open_physical (mmap_fd)) == -1) {
         printf("I_InitGraphics: fail to open file to /dev/mem");
         return;
     }
-    if (!(lw_v_addr = map_physical (fpga_fd, LW_BRIDGE_BASE, LW_BRIDGE_SPAN))){
+    if (!(lw_v_addr = map_physical (mmap_fd, LW_BRIDGE_BASE, LW_BRIDGE_SPAN))){
         printf("I_InitGraphics: fail to map FPGA LW bridge");
         return;
     }
-    if (!(sram_v_addr = map_physical (fpga_fd, FPGA_ONCHIP_BASE, FPGA_ONCHIP_SPAN))){
+    if (!(sram_v_addr = map_physical (mmap_fd, FPGA_ONCHIP_BASE, FPGA_ONCHIP_SPAN))){
         printf("I_InitGraphics: fail to map FPGA SRAM bridge");
         return;
     }
+    if (!(ddr_v_addr = map_physical (mmap_fd, DDR_BASE, DDR_SPAN))){
+        printf("I_InitGraphics: fail to map DDR3 SDRAM");
+        exit(1);
+    }
+
     
     led_ptr = (int *) ( (int)lw_v_addr + LEDR_BASE);
+    doom_ptr = (int *) ( (int)lw_v_addr + DOOM_DRIVER_BASE);
+
+    *(doom_ptr+1) = DDR_BASE + 0x30000000;
+    *(doom_ptr) = CMD_V_Init;
+
+    int i;
+    while (1) {
+        printf("Contents of 0x3000,0000: ");
+        for (i = 0; i < 20; i++) {
+            printf("%d, ", *(ddr_v_addr + i));
+        }
+        printf("\n");
+        sleep(1);
+    }
+
 
     
     keys_fd = open(dev, O_RDONLY);
@@ -195,12 +209,13 @@ void I_ShutdownGraphics(void) {
     printf("I_ShutdownGraphics: enter\n");
     unmap_physical (lw_v_addr, LW_BRIDGE_SPAN);
     unmap_physical (sram_v_addr, FPGA_ONCHIP_SPAN);
-    close_physical (fpga_fd);
+    close_physical (mmap_fd);
 
     lw_v_addr = NULL;
     sram_v_addr = NULL;
     led_ptr = NULL;
-    fpga_fd = -1;
+    doom_ptr = NULL;
+    mmap_fd = -1;
     keys_fd = -1; // let Linux auto-close this file
 }
 
@@ -219,21 +234,6 @@ void I_SetPalette (byte* palette) {
         c = gammatable[usegamma][*palette++];
         local_palette[(i*3)+PALETTE_B_OFFSET] = c >> 3;
     }
-
-    // printf("\n\nINPUT PALETTE: \n");
-    // for (i = 0; i < 256; i++) {
-    //     printf("%02X ", palette[i]);
-    // }
-
-    
-    // printf("\n\nLOCAL PALETTE: \n");
-    // for (i = 0; i < 256; i++) {
-    //     printf("%02X-", local_palette[(i*3)+PALETTE_R_OFFSET]);
-    //     printf("%02X-", local_palette[(i*3)+PALETTE_G_OFFSET]);
-    //     printf("%02X ", local_palette[(i*3)+PALETTE_B_OFFSET]);
-    // }
-
-
 }
 
 void I_UpdateNoBlit (void) { }
@@ -254,9 +254,6 @@ void I_FinishUpdate (void) {
             byte b = local_palette[(index*3)+PALETTE_B_OFFSET];
             WriteVgaPixel(x, y, r, g, b);
             
-            // if (y==0 && !printedScreenData) {
-            //     printf("x=%d index=%d, r=%d, g=%d, b=%d\n", x, index, r, g, b);
-            // }
         }
     }
 

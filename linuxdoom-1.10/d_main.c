@@ -63,6 +63,7 @@ static const char rcsid[] = "$Id: d_main.c,v 1.8 1997/02/03 22:45:09 b1 Exp $";
 #include "i_system.h"
 #include "i_sound.h"
 #include "i_video.h"
+#include "i_peripherals.h"
 
 #include "g_game.h"
 
@@ -465,53 +466,53 @@ void D_AdvanceDemo (void)
     switch (demosequence)
     {
       case 0:
-	if ( gamemode == commercial )
-	    pagetic = 35 * 11;
-	else
-	    pagetic = 170;
-	gamestate = GS_DEMOSCREEN;
-	pagename = "TITLEPIC";
-	if ( gamemode == commercial )
-	  S_StartMusic(mus_dm2ttl);
-	else
-	  S_StartMusic (mus_intro);
-	break;
+		if ( gamemode == commercial )
+			pagetic = 35 * 11;
+		else
+			pagetic = 170;
+		gamestate = GS_DEMOSCREEN;
+		pagename = "TITLEPIC";
+		if ( gamemode == commercial )
+		S_StartMusic(mus_dm2ttl);
+		else
+		S_StartMusic (mus_intro);
+		break;
       case 1:
-	G_DeferedPlayDemo ("demo1");
+		G_DeferedPlayDemo ("demo1");
 	break;
       case 2:
-	pagetic = 200;
-	gamestate = GS_DEMOSCREEN;
-	pagename = "CREDIT";
-	break;
+		pagetic = 200;
+		gamestate = GS_DEMOSCREEN;
+		pagename = "CREDIT";
+		break;
       case 3:
-	G_DeferedPlayDemo ("demo2");
-	break;
+		G_DeferedPlayDemo ("demo2");
+		break;
       case 4:
-	gamestate = GS_DEMOSCREEN;
-	if ( gamemode == commercial)
-	{
-	    pagetic = 35 * 11;
-	    pagename = "TITLEPIC";
-	    S_StartMusic(mus_dm2ttl);
-	}
-	else
-	{
-	    pagetic = 200;
+		gamestate = GS_DEMOSCREEN;
+		if ( gamemode == commercial)
+		{
+			pagetic = 35 * 11;
+			pagename = "TITLEPIC";
+			S_StartMusic(mus_dm2ttl);
+		}
+		else
+		{
+			pagetic = 200;
 
-	    if ( gamemode == retail )
-	      pagename = "CREDIT";
-	    else
-	      pagename = "HELP2";
-	}
-	break;
+			if ( gamemode == retail )
+			pagename = "CREDIT";
+			else
+			pagename = "HELP2";
+		}
+		break;
       case 5:
-	G_DeferedPlayDemo ("demo3");
-	break;
+		G_DeferedPlayDemo ("demo3");
+		break;
         // THE DEFINITIVE DOOM Special Edition demo
       case 6:
-	G_DeferedPlayDemo ("demo4");
-	break;
+		G_DeferedPlayDemo ("demo4");
+		break;
     }
 }
 
@@ -796,6 +797,13 @@ void FindResponseFile (void)
 //
 void D_DoomMain (void)
 {
+	int mmap_fd = -1;
+	volatile void *lw_v_addr = NULL;
+	volatile void *sram_v_addr = NULL;
+	volatile byte *ddr_v_addr = NULL;
+	volatile int *led_ptr = NULL;
+	volatile uint32_t *doom_ptr = NULL;
+
     int             p;
     char                    file[256];
 
