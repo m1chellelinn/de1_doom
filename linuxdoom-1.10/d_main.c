@@ -82,8 +82,8 @@ int mmap_fd = -1;
 volatile void *lw_v_addr = NULL;
 volatile void *sram_v_addr = NULL;
 volatile byte *ddr_v_addr = NULL;
-volatile uint32_t *led_ptr = NULL;
-volatile uint32_t *doom_ptr = NULL;
+volatile int *led_ptr = NULL;
+volatile int *doom_ptr = NULL;
 
 //
 // D-DoomLoop()

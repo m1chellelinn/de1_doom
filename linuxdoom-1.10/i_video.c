@@ -173,14 +173,15 @@ void I_InitGraphics (void) {
     led_ptr = (int *) ( (int)lw_v_addr + LEDR_BASE);
     doom_ptr = (int *) ( (int)lw_v_addr + DOOM_DRIVER_BASE);
 
+    int i;
+
     printf("Calling FPGA debug function\n");
-    *(doom_ptr+1) = DDR_BASE + 0x30000000;
+    *(int*)((int)doom_ptr+1) = DDR_BASE + 0x30000000;
     *(doom_ptr) = CMD_V_Init;
 
     printf("Getting FPGA-written data??\n");
-    int i;
     while (1) {
-        printf("Contents of 0x3000,0000: ");
+        printf("Contents of 0x3000_0000: ");
         for (i = 0; i < 20; i++) {
             printf("%d, ", *(ddr_v_addr + i));
         }

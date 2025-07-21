@@ -1,12 +1,11 @@
-#include <stdint.h>
 #include "doomtype.h"
 
 extern int mmap_fd;
 extern volatile void *lw_v_addr;
 extern volatile void *sram_v_addr;
 extern volatile byte *ddr_v_addr;
-extern volatile uint32_t *led_ptr;
-extern volatile uint32_t *doom_ptr;
+extern volatile int *led_ptr;
+extern volatile int *doom_ptr;
 
 
 /* Prototypes for functions used to access physical memory addresses */
