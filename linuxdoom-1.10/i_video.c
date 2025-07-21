@@ -156,7 +156,7 @@ void I_InitGraphics (void) {
         printf("I_InitGraphics: fail to open file to /dev/mem");
         return;
     }
-    if (!(lw_v_addr = map_physical (mmap_fd, LW_BRIDGE_BASE, LW_BRIDGE_SPAN))){
+    if (!(lw_v_addr = map_physical (mmap_fd, LW_BRIDGE_BASE, 0x8000))){
         printf("I_InitGraphics: fail to map FPGA LW bridge");
         return;
     }
