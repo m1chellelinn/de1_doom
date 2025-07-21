@@ -78,6 +78,13 @@ static const char rcsid[] = "$Id: d_main.c,v 1.8 1997/02/03 22:45:09 b1 Exp $";
 
 #include "d_main.h"
 
+int mmap_fd = -1;
+volatile void *lw_v_addr = NULL;
+volatile void *sram_v_addr = NULL;
+volatile byte *ddr_v_addr = NULL;
+volatile int *led_ptr = NULL;
+volatile uint32_t *doom_ptr = NULL;
+
 //
 // D-DoomLoop()
 // Not a globally visible function,
@@ -797,12 +804,6 @@ void FindResponseFile (void)
 //
 void D_DoomMain (void)
 {
-	int mmap_fd = -1;
-	volatile void *lw_v_addr = NULL;
-	volatile void *sram_v_addr = NULL;
-	volatile byte *ddr_v_addr = NULL;
-	volatile int *led_ptr = NULL;
-	volatile uint32_t *doom_ptr = NULL;
 
     int             p;
     char                    file[256];
