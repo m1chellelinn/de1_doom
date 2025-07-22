@@ -172,8 +172,17 @@ void I_InitGraphics (void) {
     
     led_ptr = (int *) ( (int)lw_v_addr + LEDR_BASE);
     doom_ptr = (int *) ( (int)lw_v_addr + DOOM_DRIVER_BASE);
-
+    
     int i;
+    volatile int* ptr;
+    printf("Sweeping address space\n");
+    for (i = 0; i < LW_BRIDGE_SPAN; i += 0x100) {
+
+        ptr = (int*)((int)led_ptr+i);
+        printf(" %x", (int)ptr - (int)lw_v_addr);
+        *ptr = 0;
+    }
+    printf("\n");
 
     printf("Calling FPGA debug function\n");
     *(int*)((int)doom_ptr+1) = DDR_BASE + 0x30000000;
