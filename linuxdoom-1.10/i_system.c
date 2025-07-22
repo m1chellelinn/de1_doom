@@ -78,8 +78,8 @@ int  I_GetHeapSize (void)
 byte* I_ZoneBase (int*	size)
 {
     *size = mb_used*1024*1024;
-    
-    return ddr_v_addr;  // Assume I_ZoneBase (Z_Init) is called after I_InitGraphics
+    return (byte *) malloc (*size);
+    // return ddr_v_addr;  // Assume I_ZoneBase (Z_Init) is called after I_InitGraphics
 }
 
 

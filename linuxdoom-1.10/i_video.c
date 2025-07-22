@@ -178,6 +178,8 @@ void I_InitGraphics (void) {
     printf("Sweeping address space\n");
     for (i = 0; i < LW_BRIDGE_SPAN; i += 0x100) {
 
+        *led_ptr = *led_ptr + 1;
+
         ptr = (int*)((int)led_ptr+i);
         printf(" %x", (int)ptr - (int)lw_v_addr);
         *ptr = 0;
