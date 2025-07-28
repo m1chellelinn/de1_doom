@@ -178,7 +178,7 @@ void I_InitGraphics (void) {
     }
     fclose(fp); printf("File /sys/kernel/fpga_space/phys contents: %s", buf);
 
-    ddr_p_addr = atoi(buf);
+    ddr_p_addr = 0; //atoi(buf);
     if (ddr_p_addr == 0 && buf[0] != '0') {
         printf("I_InitGraphics: invalid contents in /sys/kernel/fpga_space/phys\n");
         exit(1);
