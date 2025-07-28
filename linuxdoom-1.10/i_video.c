@@ -179,10 +179,10 @@ void I_InitGraphics (void) {
     fclose(fp); printf("File /sys/kernel/fpga_space/phys contents: %s", buf);
 
     ddr_p_addr = 0; //atoi(buf);
-    if (ddr_p_addr == 0 && buf[0] != '0') {
-        printf("I_InitGraphics: invalid contents in /sys/kernel/fpga_space/phys\n");
-        exit(1);
-    }
+    // if (ddr_p_addr == 0 && buf[0] != '0') {
+    //     printf("I_InitGraphics: invalid contents in /sys/kernel/fpga_space/phys\n");
+    //     exit(1);
+    // }
 
     // phys_addr now holds the converted value
     if (!(ddr_v_addr = map_physical(mmap_fd, ddr_p_addr, 7*1024*1024))) {
