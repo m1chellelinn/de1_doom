@@ -176,10 +176,10 @@ void I_InitGraphics (void) {
         fclose(fp);
         exit(1);
     }
-    fclose(fp);
-    char *endptr;
-    ddr_p_addr = strtol(buf, &endptr, 0);
-    if (endptr == buf || *endptr != '\0') {
+    fclose(fp); printf("File /sys/kernel/fpga_space/phys contents: %s", buf);
+
+    ddr_p_addr = atoi(buf);
+    if (ddr_p_addr == 0 && buf[0] != '0') {
         printf("I_InitGraphics: invalid contents in /sys/kernel/fpga_space/phys\n");
         exit(1);
     }
