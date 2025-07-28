@@ -164,7 +164,33 @@ void I_InitGraphics (void) {
         printf("I_InitGraphics: fail to map FPGA SRAM bridge");
         return;
     }
-    printf("Using ddr_p_addr = %d\n", ddr_p_addr);
+
+    FILE *fp = fopen("/sys/kernel/fpga_space/phys", "r");
+    if (!fp) {
+        printf("I_InitGraphics: failed to open /sys/kernel/fpga_space/phys\n");
+        exit(1);
+    }
+    char buf[64];
+    if (!fgets(buf, sizeof(buf), fp)) {
+        printf("I_InitGraphics: failed to read from /sys/kernel/fpga_space/phys\n");
+        fclose(fp);
+        exit(1);
+    }
+    fclose(fp);
+    char *endptr;
+    ddr_p_addr = strtol(buf, &endptr, 0);
+    if (endptr == buf || *endptr != '\0') {
+        printf("I_InitGraphics: invalid contents in /sys/kernel/fpga_space/phys\n");
+        exit(1);
+    }
+
+    // phys_addr now holds the converted value
+    if (!(ddr_v_addr = map_physical(mmap_fd, ddr_p_addr, 7*1024*1024))) {
+        printf("I_InitGraphics: fail to map DDR3 SDRAM\n");
+        exit(1);
+    }
+    
+    printf("Initialized shared RAM space: %d\n", ddr_v_addr);
 
     
     led_ptr = (int *) ( (int)lw_v_addr + LEDR_BASE);
