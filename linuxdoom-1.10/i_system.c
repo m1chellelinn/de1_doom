@@ -78,8 +78,35 @@ int  I_GetHeapSize (void)
 byte* I_ZoneBase (int*	size)
 {
     *size = mb_used*1024*1024;
-    return (byte *) malloc (*size);
-    // return ddr_v_addr;  // Assume I_ZoneBase (Z_Init) is called after I_InitGraphics
+    // return (byte *) malloc (*size);
+
+    FILE *fp = fopen("/sys/kernel/fpga_space/phys", "r");
+    if (!fp) {
+        printf("I_InitGraphics: failed to open /sys/kernel/fpga_space/phys\n");
+        exit(1);
+    }
+    char buf[64];
+    if (!fgets(buf, sizeof(buf), fp)) {
+        printf("I_InitGraphics: failed to read from /sys/kernel/fpga_space/phys\n");
+        fclose(fp);
+        exit(1);
+    }
+    fclose(fp);
+    char *endptr;
+    ddr_p_addr = strtol(buf, &endptr, 0);
+    if (endptr == buf || *endptr != '\0') {
+        printf("I_InitGraphics: invalid contents in /sys/kernel/fpga_space/phys\n");
+        exit(1);
+    }
+
+    // phys_addr now holds the converted value
+    if (!(ddr_v_addr = map_physical(mmap_fd, ddr_p_addr, size+1024*1024))) {
+        printf("I_InitGraphics: fail to map DDR3 SDRAM\n");
+        exit(1);
+    }
+    
+    printf("Initialized shared RAM space: %d\n", ddr_v_addr);
+    return (byte*)((int)ddr_v_addr + 1024*1024); // the first 1mB is reserved for the FPGA-CPU shared memory
 }
 
 

@@ -164,10 +164,7 @@ void I_InitGraphics (void) {
         printf("I_InitGraphics: fail to map FPGA SRAM bridge");
         return;
     }
-    if (!(ddr_v_addr = map_physical (mmap_fd, DDR_BASE, DDR_SPAN))){
-        printf("I_InitGraphics: fail to map DDR3 SDRAM");
-        exit(1);
-    }
+    printf("Using ddr_p_addr = %d\n", ddr_p_addr);
 
     
     led_ptr = (int *) ( (int)lw_v_addr + LEDR_BASE);
@@ -188,12 +185,12 @@ void I_InitGraphics (void) {
     printf("\n");
 
     printf("Calling FPGA debug function\n");
-    *(int*)((int)doom_ptr+1) = DDR_BASE + 0x30000000;
+    *(int*)((int)doom_ptr+1) = ddr_p_addr;
     *(doom_ptr) = CMD_V_Init;
 
     printf("Getting FPGA-written data??\n");
     while (1) {
-        printf("Contents of 0x3000_0000: ");
+        printf("Contents of 0x%x: ", ddr_p_addr);
         for (i = 0; i < 20; i++) {
             printf("%d, ", *(ddr_v_addr + i));
         }

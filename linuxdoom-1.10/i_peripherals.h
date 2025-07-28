@@ -4,6 +4,7 @@ extern int mmap_fd;
 extern volatile void *lw_v_addr;
 extern volatile void *sram_v_addr;
 extern volatile byte *ddr_v_addr;
+extern volatile int ddr_p_addr;
 extern volatile int *led_ptr;
 extern volatile int *doom_ptr;
 
