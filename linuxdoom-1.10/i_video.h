@@ -34,7 +34,7 @@
 // TODO: Called by D_DoomMain,
 // determines the hardware configuration
 // and sets up the video mode
-void I_InitGraphics (void);
+void I_InitHardware (void);
 
 // TODO: last call before program exit
 void I_ShutdownGraphics(void);

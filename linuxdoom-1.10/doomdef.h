@@ -26,6 +26,10 @@
 #include <stdio.h>
 #include <string.h>
 
+//
+// FPGA commands
+//
+#define CMD_RESET 0x80000000
 #define CMD_AM_clearFB 0 // int color, int f_w, int f_h
 #define CMD_AM_drawCrosshair 1 //
 #define CMD_AM_drawFline 2 //

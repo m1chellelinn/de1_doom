@@ -148,84 +148,56 @@ void GetAndSendUpdates() {
 }
 
 
-void I_InitGraphics (void) {
-    printf("I_InitGraphics: enter\n");
+void I_InitHardware (void) {
+    printf("I_InitHardware: enter\n");
 
     // Map FPGA virtual address ranges
     if ((mmap_fd = open_physical (mmap_fd)) == -1) {
-        printf("I_InitGraphics: fail to open file to /dev/mem");
+        printf("I_InitHardware: fail to open file to /dev/mem");
         return;
     }
     if (!(lw_v_addr = map_physical (mmap_fd, LW_BRIDGE_BASE, LW_BRIDGE_SPAN))){
-        printf("I_InitGraphics: fail to map FPGA LW bridge");
+        printf("I_InitHardware: fail to map FPGA LW bridge");
         return;
     }
     if (!(sram_v_addr = map_physical (mmap_fd, FPGA_ONCHIP_BASE, FPGA_ONCHIP_SPAN))){
-        printf("I_InitGraphics: fail to map FPGA SRAM bridge");
+        printf("I_InitHardware: fail to map FPGA SRAM bridge");
         return;
     }
 
     FILE *fp = fopen("/sys/kernel/fpga_space/phys", "r");
     if (!fp) {
-        printf("I_InitGraphics: failed to open /sys/kernel/fpga_space/phys\n");
+        printf("I_InitHardware: failed to open /sys/kernel/fpga_space/phys\n");
         exit(1);
     }
     char buf[64];
     if (!fgets(buf, sizeof(buf), fp)) {
-        printf("I_InitGraphics: failed to read from /sys/kernel/fpga_space/phys\n");
+        printf("I_InitHardware: failed to read from /sys/kernel/fpga_space/phys\n");
         fclose(fp);
         exit(1);
     }
     fclose(fp); printf("File /sys/kernel/fpga_space/phys contents: %s", buf);
 
-    ddr_p_addr = 0; //atoi(buf);
-    // if (ddr_p_addr == 0 && buf[0] != '0') {
-    //     printf("I_InitGraphics: invalid contents in /sys/kernel/fpga_space/phys\n");
-    //     exit(1);
-    // }
+    ddr_p_addr = atoi(buf);
+    if (ddr_p_addr == 0 && buf[0] != '0') {
+        printf("I_InitHardware: invalid contents in /sys/kernel/fpga_space/phys\n");
+        exit(1);
+    }
 
     // phys_addr now holds the converted value
     if (!(ddr_v_addr = map_physical(mmap_fd, ddr_p_addr, 7*1024*1024))) {
-        printf("I_InitGraphics: fail to map DDR3 SDRAM\n");
+        printf("I_InitHardware: fail to map DDR3 SDRAM\n");
         exit(1);
     }
     
-    printf("Initialized shared RAM space: %d\n", ddr_v_addr);
+    printf("Initialized shared RAM space: 0x%x\n", ddr_v_addr);
 
-    
     led_ptr = (int *) ( (int)lw_v_addr + LEDR_BASE);
     doom_ptr = (int *) ( (int)lw_v_addr + DOOM_DRIVER_BASE);
-    
-    int i;
-    volatile int* ptr;
-    printf("Sweeping address space\n");
-    for (i = 0; i < LW_BRIDGE_SPAN; i += 0x100) {
 
-        printf("LED ptr value: %d\n", *led_ptr);
-        *led_ptr = *led_ptr + 1;
+    printf("Checking FPGA memory access capability\n");
+    HAL_SelfCheck(); 
 
-        ptr = (int*)((int)led_ptr+i);
-        printf(" %x", (int)ptr - (int)lw_v_addr);
-        *ptr = 0;
-    }
-    printf("\n");
-
-    printf("Calling FPGA debug function\n");
-    *(int*)((int)doom_ptr+1) = ddr_p_addr;
-    *(doom_ptr) = CMD_V_Init;
-
-    printf("Getting FPGA-written data??\n");
-    while (1) {
-        printf("Contents of 0x%x: ", ddr_p_addr);
-        for (i = 0; i < 20; i++) {
-            printf("%d, ", *(ddr_v_addr + i));
-        }
-        printf("\n");
-        sleep(1);
-    }
-
-
-    
     keys_fd = open(dev, O_RDONLY);
     if (keys_fd == -1) {
         printf("Cannot open %s: %s.\n", dev, strerror(errno));
@@ -256,6 +228,8 @@ void I_ShutdownGraphics(void) {
 
 void I_SetPalette (byte* palette) {
     // printf("I_SetPalette: enter w/ usegamma=%d\n", usegamma);
+    HAL_I_SetPalette(palette);
+    
     byte c;
     int i;
 
@@ -278,10 +252,12 @@ void I_UpdateNoBlit (void) { }
 void I_FinishUpdate (void) {
     // printf("I_FinishUpdate invoke\n");
     // printf("I_FinishUpdate: invoke\n");
+
+    HAL_I_FinishUpdate(screens[0]);
     
     int x, y;
-    for (y = 0; y < SCREENHEIGHT; y++) {
-        for (x = 0; x < SCREENWIDTH; x++) {
+    for (y = 0; y < SCREENHEIGHT; y+=5) {
+        for (x = 0; x < SCREENWIDTH; x+=5) {
             byte index = screens[0][y * SCREENWIDTH + x];
             byte r = local_palette[(index*3)+PALETTE_R_OFFSET];
             byte g = local_palette[(index*3)+PALETTE_G_OFFSET];

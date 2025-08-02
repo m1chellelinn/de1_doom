@@ -1018,8 +1018,8 @@ void D_DoomMain (void)
     }
     
     // init subsystems
-	printf ("I_InitGraphics: initialize hardware\n");
-    I_InitGraphics ();
+	printf ("I_InitHardware: initialize hardware\n");
+    I_InitHardware ();
 
     printf ("V_Init: allocate screens.\n");
     V_Init ();
