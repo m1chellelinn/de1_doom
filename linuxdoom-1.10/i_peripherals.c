@@ -40,14 +40,18 @@ int unmap_physical(void * virtual_base, unsigned int span) {
     return 0;
 }
 
+inline int convert_to_physical(int virtual_addr) {
+    return virtual_addr - ((int)ddr_v_addr) + ddr_p_addr;
+}
+
 
 void HAL_I_FinishUpdate(byte *screens) {
-    *(doom_ptr+1) = (int) screens;
+    *(doom_ptr+1) = convert_to_physical(screens);
     *doom_ptr = CMD_I_FinishUpdate;
 }
 
 void HAL_I_SetPalette(byte* palette) {
-    *(doom_ptr+1) = (int) palette;
+    *(doom_ptr+1) = convert_to_physical(palette);
     *doom_ptr = CMD_I_SetPalette;
 }
 
