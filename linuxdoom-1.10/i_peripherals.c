@@ -52,7 +52,7 @@ void HAL_I_SetPalette(byte* palette) {
 }
 
 void HAL_SelfCheck() {
-    *(int*)((int)doom_ptr+1) = ddr_p_addr;
+    *(doom_ptr+1) = ddr_p_addr;
     *doom_ptr = CMD_V_Init; // Expect FPGA to line the address range ddr_p_addr to ddr_p_addr+20 with numbers 0, 1, 2, ..., 19.
 
     int i;
