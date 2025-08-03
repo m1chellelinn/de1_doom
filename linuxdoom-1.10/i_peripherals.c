@@ -61,9 +61,9 @@ void HAL_SelfCheck() {
             printf("Address 0x%x (physical addr 0x%x) "
                    "has value %d. Expected %d. \nExit.\n", 
                    ddr_v_addr+i, ddr_p_addr+i, *(ddr_v_addr + i), i);
-            exit(1);               
         }
     }
+    exit(1);        
 }
 
 void HAL_Reset() {
