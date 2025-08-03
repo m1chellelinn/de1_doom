@@ -42,12 +42,12 @@ int unmap_physical(void * virtual_base, unsigned int span) {
 
 
 void HAL_I_FinishUpdate(byte *screens) {
-    *(int*)((int)doom_ptr+1) = (int) screens;
+    *(doom_ptr+1) = (int) screens;
     *doom_ptr = CMD_I_FinishUpdate;
 }
 
 void HAL_I_SetPalette(byte* palette) {
-    *(int*)((int)doom_ptr+1) = (int) palette;
+    *(doom_ptr+1) = (int) palette;
     *doom_ptr = CMD_I_SetPalette;
 }
 
