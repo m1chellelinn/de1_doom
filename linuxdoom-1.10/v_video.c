@@ -29,6 +29,7 @@ rcsid[] = "$Id: v_video.c,v 1.5 1997/02/03 22:45:13 b1 Exp $";
 
 
 #include "i_system.h"
+#include "i_peripherals.h"
 #include "r_local.h"
 
 #include "doomdef.h"
@@ -492,8 +493,8 @@ void V_Init (void)
 		
     // stick these in low dos memory on PCs
 
-    base = I_AllocLow (SCREENWIDTH*SCREENHEIGHT*4);
-
+    base = ddr_v_addr;
+    memset (base,0,5*320*200);
     for (i=0 ; i<4 ; i++)
 	screens[i] = base + i*SCREENWIDTH*SCREENHEIGHT;
 }

@@ -48,7 +48,6 @@ rcsid[] = "$Id: i_x.c,v 1.6 1997/02/03 22:45:10 b1 Exp $";
 #include "m_argv.h"
 #include "d_main.h"
 
-#include "i_address_map.h"
 #include "i_peripherals.h"
 
 #define POINTER_WARP_COUNTDOWN	1
