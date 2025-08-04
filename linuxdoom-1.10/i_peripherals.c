@@ -44,13 +44,22 @@ inline int convert_to_physical(int virtual_addr) {
     return virtual_addr - ((int)ddr_v_addr) + ddr_p_addr;
 }
 
-
+boolean logUpdateAddr = false;
 void HAL_I_FinishUpdate(byte *screens) {
+    if (!logUpdateAddr) {
+        printf("screens address = %x - %x + %x = %x", screens, ddr_v_addr, ddr_p_addr, convert_to_physical(screens));
+        logUpdateAddr = true;
+    }
     *(doom_ptr+1) = convert_to_physical(screens);
     *doom_ptr = CMD_I_FinishUpdate;
 }
 
+boolean logPaletteAddr = false;
 void HAL_I_SetPalette(byte* palette) {
+    if (!logPaletteAddr) {
+        printf("screens address = %x - %x + %x = %x", palette, ddr_v_addr, ddr_p_addr, convert_to_physical(palette));
+        logPaletteAddr = true;
+    }
     *(doom_ptr+1) = convert_to_physical(palette);
     *doom_ptr = CMD_I_SetPalette;
 }

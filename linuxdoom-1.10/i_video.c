@@ -227,7 +227,7 @@ void I_ShutdownGraphics(void) {
 
 
 void I_SetPalette (byte* palette) {
-    // printf("I_SetPalette: enter w/ usegamma=%d\n", usegamma);
+    printf("I_SetPalette invoke\n");
     HAL_I_SetPalette(palette);
     
     byte c;
@@ -247,11 +247,13 @@ void I_SetPalette (byte* palette) {
 void I_UpdateNoBlit (void) { }
 
 
-// boolean printedScreenData = false;
+boolean printedScreenData = false;
 
 void I_FinishUpdate (void) {
-    // printf("I_FinishUpdate invoke\n");
-    // printf("I_FinishUpdate: invoke\n");
+    if (!printedScreenData) {
+        printf("I_FinishUpdate invoke\n");
+        printedScreenData = true;
+    }
 
     HAL_I_FinishUpdate(screens[0]);
     
