@@ -100,7 +100,7 @@ static int keyMap[256] = {
     [KEY_TAB] = DOOM_KEY_TAB,
 
     // Quitting the game
-    [KEY_Y] = 'Y'
+    [KEY_Y] = 'y'
 };
 
 
