@@ -189,11 +189,13 @@ void I_InitHardware (void) {
         exit(1);
     }
     
-    printf("Initialized shared RAM space: 0x%x\n", ddr_v_addr);
+    printf("Initialized shared RAM space: 0x%x (physical: 0x%x\n", ddr_v_addr, ddr_p_addr);
 
     led_ptr = (int *) ( (int)lw_v_addr + LEDR_BASE);
     doom_ptr = (int *) ( (int)lw_v_addr + DOOM_DRIVER_BASE);
 
+    printf("Resetting FPGA\n");
+    HAL_Reset();
     printf("Checking FPGA memory access capability\n");
     HAL_SelfCheck(); 
 
