@@ -228,59 +228,13 @@ void I_ShutdownGraphics(void) {
 
 
 void I_SetPalette (byte* palette) {
-    printf("I_SetPalette invoke\n");
     HAL_I_SetPalette(palette);
-    
-    byte c;
-    int i;
-
-    usegamma = 3;
-    for (i = 0 ; i<256 ; i++) {
-        c = gammatable[usegamma][*palette++];
-        local_palette[(i*3)+PALETTE_R_OFFSET] = c >> 3; // VGA R 
-        c = gammatable[usegamma][*palette++];
-        local_palette[(i*3)+PALETTE_G_OFFSET] = c >> 2;
-        c = gammatable[usegamma][*palette++];
-        local_palette[(i*3)+PALETTE_B_OFFSET] = c >> 3;
-    }
 }
 
 void I_UpdateNoBlit (void) { }
 
-
-boolean printedScreenData = false;
-
 void I_FinishUpdate (void) {
-    if (!printedScreenData) {
-        printf("I_FinishUpdate invoke\n");
-        printedScreenData = true;
-    }
-
     HAL_I_FinishUpdate(screens[0]);
-    
-    int x, y;
-    for (y = 0; y < SCREENHEIGHT; y+=5) {
-        for (x = 0; x < SCREENWIDTH; x+=5) {
-            byte index = screens[0][y * SCREENWIDTH + x];
-            byte r = local_palette[(index*3)+PALETTE_R_OFFSET];
-            byte g = local_palette[(index*3)+PALETTE_G_OFFSET];
-            byte b = local_palette[(index*3)+PALETTE_B_OFFSET];
-            WriteVgaPixel(x, y, r, g, b);
-            
-        }
-    }
-
-    // Debug pixels
-    x = 50; y = 220;
-    WriteVgaPixel(x++, y, 0xFF, 0xFF, 0xFF);
-    WriteVgaPixel(x++, y, 0xFF, 0x00, 0x00);
-    WriteVgaPixel(x++, y, 0x00, 0xFF, 0x00);
-    WriteVgaPixel(x++, y, 0x00, 0x00, 0xFF);
-    WriteVgaPixel(x++, y, 0xFF, 0xFF, 0x00);
-    WriteVgaPixel(x++, y, 0x00, 0xFF, 0xFF);
-    WriteVgaPixel(x++, y, 0xFF, 0x00, 0xFF);
-    
-    // printedScreenData = true;
     GetAndSendUpdates();
 }
 
