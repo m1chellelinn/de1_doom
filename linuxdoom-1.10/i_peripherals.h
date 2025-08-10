@@ -33,7 +33,7 @@ void HAL_I_SetPalette(byte* palette);
 // HAL_R_FillBackScreen();
 void HAL_V_CopyRect();
 void HAL_V_DrawBlock();
-void HAL_V_DrawPatch(int x, int y, int scrn, void *patch);
+void HAL_V_DrawPatch(int x, int y, int scrn, void *screens, void *patch);
 void HAL_SelfCheck();
 // void HAL_Wi_slamBackground();
 void HAL_Reset();

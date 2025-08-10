@@ -38,7 +38,7 @@
 #define CMD_R_FillBackScreen 5 //
 #define CMD_V_CopyRect 6 //
 #define CMD_V_DrawBlock 7 //
-#define CMD_V_DrawPatch 8 // int x, int y, int scrn, addr patch
+#define CMD_V_DrawPatch 8 // int x, int y, int scrn, addr screens, addr patch
 #define CMD_V_Init 9 // won’t implement lol
 #define CMD_Wi_slamBackground 10 //
 

@@ -131,10 +131,10 @@ void GetAndSendUpdates() {
             if (event_.code >= 0 && event_.code < 256) {
                 doomKeyCode = keyMap[event_.code];
             }
-            printf("Got new event: %d-%s\n  -->Doom interpretation: %d\n", 
-                event_.code, 
-                event_.value ? "ev_keydown" : "ev_keyup", 
-                doomKeyCode);
+            // printf("Got new event: %d-%s\n  -->Doom interpretation: %d\n", 
+            //     event_.code, 
+            //     event_.value ? "ev_keydown" : "ev_keyup", 
+            //     doomKeyCode);
 
             event_t doomEvent;
             doomEvent.data1 = doomKeyCode;

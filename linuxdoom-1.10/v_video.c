@@ -197,7 +197,7 @@ V_CopyRect
     } 
 } 
  
-int largestWidth = 0;
+int smallestWidth = 0;
 
 //
 // V_DrawPatch
@@ -210,9 +210,11 @@ V_DrawPatch
   int		scrn,
   patch_t*	patch ) 
 { 
-    if (patch->width > largestWidth) {
-        largestWidth = patch->width;
-        printf("V_DrawPatch: NEW LARGEST WIDTH: %d", largestWidth);
+    printf("Patch at (%d,%d), scrn=%d, patch=%x\n"
+           "  size: %dx%d", x, y, scrn, patch, patch->width, patch->height);
+    if (patch->width < smallestWidth) {
+        smallestWidth = patch->width;
+        printf("V_DrawPatch: NEW SMALLEST WIDTH: %d\n", smallestWidth);
     }
 
     int		count;
@@ -267,6 +269,7 @@ V_DrawPatch
                         + 4 ); 
         } 
     }			 
+    printf("End patch \n\n");
 } 
  
 //
