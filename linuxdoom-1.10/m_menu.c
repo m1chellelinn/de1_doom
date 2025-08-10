@@ -1799,8 +1799,20 @@ void M_Drawer (void)
 
     
     // DRAW SKULL
+    patch_t *skullPtr = W_CacheLumpName(skullName[whichSkull],PU_CACHE);
+    printf(
+        "Patch at (%d,%d), scrn=%d, patch=%x\n"
+        "  size: %dx%d",
+        x + SKULLXOFF,
+        currentMenu->y - 5 + itemOn*LINEHEIGHT, 
+        0, 
+        skullPtr, 
+        skullPtr->width, 
+        skullPtr->height
+    );
+    
     V_DrawPatchDirect(x + SKULLXOFF,currentMenu->y - 5 + itemOn*LINEHEIGHT, 0,
-		      W_CacheLumpName(skullName[whichSkull],PU_CACHE));
+		      skullPtr);
 
 }
 
