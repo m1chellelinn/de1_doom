@@ -1731,6 +1731,7 @@ void M_StartControlPanel (void)
     itemOn = currentMenu->lastOn;   // JDC
 }
 
+boolean printedPatchInfo = false;
 
 //
 // M_Drawer
@@ -1800,16 +1801,37 @@ void M_Drawer (void)
     
     // DRAW SKULL
     patch_t *skullPtr = W_CacheLumpName(skullName[whichSkull],PU_CACHE);
-    printf(
-        "Patch at (%d,%d), scrn=%d, patch=%x\n"
-        "  size: %dx%d",
-        x + SKULLXOFF,
-        currentMenu->y - 5 + itemOn*LINEHEIGHT, 
-        0, 
-        skullPtr, 
-        skullPtr->width, 
-        skullPtr->height
-    );
+
+    if (!printedPatchInfo) {
+        printf(
+            "Patch at (%d,%d), scrn=%d, patch=%x\n"
+            "  size: %dx%d\n",
+            x + SKULLXOFF,
+            currentMenu->y - 5 + itemOn*LINEHEIGHT, 
+            0, 
+            skullPtr, 
+            skullPtr->width, 
+            skullPtr->height
+        );
+        int col;
+        for (col = 0; col < skullPtr->width; col++) {
+            column_t *column = (column_t *)((byte *)skullPtr + LONG(skullPtr->columnofs[col]));
+            printf(
+                "  Column %d, offset %d, len=%d, topdelta=%d\n"
+                "    Data: ",
+                col + 1, skullPtr->columnofs[col],
+                column->length, column->topdelta
+            );
+            while (column->topdelta != 0xff) {
+                int i;
+                for (i = 0; i < column->length + 4; i++) {
+                    printf("%x ", *((byte *)column + i));
+                }
+                column = (column_t *)( (byte*)column + column->length + 4);
+            }
+            printf("F F --> data end\n");
+        }
+    }
     
     V_DrawPatchDirect(x + SKULLXOFF,currentMenu->y - 5 + itemOn*LINEHEIGHT, 0,
 		      skullPtr);
