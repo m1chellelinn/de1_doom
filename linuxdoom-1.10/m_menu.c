@@ -1803,6 +1803,8 @@ void M_Drawer (void)
     patch_t *skullPtr = W_CacheLumpName(skullName[whichSkull],PU_CACHE);
 
     if (!printedPatchInfo) {
+        printedPatchInfo = true;
+        
         printf(
             "Patch at (%d,%d), scrn=%d, patch=%x\n"
             "  size: %dx%d\n",
