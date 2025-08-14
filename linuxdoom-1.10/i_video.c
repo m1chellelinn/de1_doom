@@ -131,10 +131,6 @@ void GetAndSendUpdates() {
             if (event_.code >= 0 && event_.code < 256) {
                 doomKeyCode = keyMap[event_.code];
             }
-            // printf("Got new event: %d-%s\n  -->Doom interpretation: %d\n", 
-            //     event_.code, 
-            //     event_.value ? "ev_keydown" : "ev_keyup", 
-            //     doomKeyCode);
 
             event_t doomEvent;
             doomEvent.data1 = doomKeyCode;
@@ -188,7 +184,7 @@ void I_InitHardware (void) {
         printf("I_InitHardware: fail to map DDR3 SDRAM\n");
         exit(1);
     }
-    
+
     printf("Initialized shared RAM space: 0x%x (physical: 0x%x\n", ddr_v_addr, ddr_p_addr);
 
     led_ptr = (int *) ( (int)lw_v_addr + LEDR_BASE);
@@ -231,7 +227,9 @@ void I_SetPalette (byte* palette) {
     HAL_I_SetPalette(palette);
 }
 
+
 void I_UpdateNoBlit (void) { }
+
 
 void I_FinishUpdate (void) {
     HAL_I_FinishUpdate(screens[0]);
@@ -244,14 +242,11 @@ void I_ReadScreen (byte* scr) {
 }
 
 
-
 //
 // I_StartFrame
 //
 void I_StartFrame (void)
 {
-    // printf("I_StartFrame invoke\n");
-    // er?
 }
 
 

@@ -40,6 +40,7 @@ rcsid[] = "$Id: m_menu.c,v 1.7 1997/02/03 22:45:10 b1 Exp $";
 
 #include "i_system.h"
 #include "i_video.h"
+#include "i_peripherals.h"
 #include "z_zone.h"
 #include "v_video.h"
 #include "w_wad.h"
@@ -1804,7 +1805,7 @@ void M_Drawer (void)
 
     if (!printedPatchInfo) {
         printedPatchInfo = true;
-        
+
         printf(
             "Patch at (%d,%d), scrn=%d, patch=%x\n"
             "  size: %dx%d\n",
@@ -1831,12 +1832,20 @@ void M_Drawer (void)
                 }
                 column = (column_t *)( (byte*)column + column->length + 4);
             }
-            printf("F F --> data end\n");
+            printf("ff --> data end\n");
         }
     }
-    
-    V_DrawPatchDirect(x + SKULLXOFF,currentMenu->y - 5 + itemOn*LINEHEIGHT, 0,
-		      skullPtr);
+
+    HAL_V_DrawPatch(
+        x + SKULLXOFF,
+        currentMenu->y - 5 + itemOn*LINEHEIGHT, 
+        0,
+        screens[0],
+        skullPtr
+    );
+
+    // V_DrawPatchDirect(x + SKULLXOFF,currentMenu->y - 5 + itemOn*LINEHEIGHT, 0,
+	// 	      skullPtr);
 
 }
 
