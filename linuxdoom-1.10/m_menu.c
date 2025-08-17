@@ -1855,7 +1855,8 @@ void M_Drawer (void)
         skullPtr
     );
 
-    *(screens[0]+0x57C1) = 0x49; // this was just one of the pixels written by FPGA
+    // *(screens[0]+0x57C1) = 0x49; // this was just one of the pixels written by FPGA
+    *screens[0] = 0x0; // does it work with any arbitrary pixel?
 
     // while (true) {
         HAL_I_FinishUpdate(screens[0]);
