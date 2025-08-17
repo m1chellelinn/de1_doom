@@ -217,6 +217,9 @@ V_DrawPatch
     //     printf("V_DrawPatch: NEW SMALLEST WIDTH: %d\n", smallestWidth);
     // }
 
+    HAL_V_DrawPatch(x, y, scrn, screens[scrn], patch);
+    return;
+
     int		count;
     int		col; 
     column_t*	column; 
