@@ -1837,7 +1837,7 @@ void M_Drawer (void)
     }
 
     for (i = 0; i < SCREENWIDTH*SCREENHEIGHT; i++) {
-        screens[0][i] = 0;
+        *(screens[0] + i) = 0;
     }
 
     HAL_V_DrawPatch(
