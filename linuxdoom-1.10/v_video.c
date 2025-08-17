@@ -210,15 +210,8 @@ V_DrawPatch
   int		scrn,
   patch_t*	patch ) 
 { 
-    // printf("Patch at (%d,%d), scrn=%d, patch=%x\n"
-    //        "  size: %dx%d", x, y, scrn, patch, patch->width, patch->height);
-    // if (patch->width < smallestWidth) {
-    //     smallestWidth = patch->width;
-    //     printf("V_DrawPatch: NEW SMALLEST WIDTH: %d\n", smallestWidth);
-    // }
-
-    HAL_V_DrawPatch(x, y, scrn, screens[scrn], patch);
-    return;
+    // HAL_V_DrawPatch(x, y, scrn, screens[scrn], patch);
+    // return;
 
     int		count;
     int		col; 
