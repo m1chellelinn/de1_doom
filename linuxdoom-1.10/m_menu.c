@@ -1854,15 +1854,18 @@ void M_Drawer (void)
         screens[0],
         skullPtr
     );
+
+    *(screens[0]+0x57C1) = 0x49; // this was just one of the pixels written by FPGA
+
     // while (true) {
-    //     HAL_I_FinishUpdate(screens[0]);
-    //     sleep(10);
+        HAL_I_FinishUpdate(screens[0]);
+        sleep(10);
     // }
 
-    // exit(0);
+    exit(0);
 
-    // V_DrawPatchDirect(x + SKULLXOFF,currentMenu->y - 5 + itemOn*LINEHEIGHT, 0,
-	// 	      skullPtr);
+    V_DrawPatchDirect(x + SKULLXOFF,currentMenu->y - 5 + itemOn*LINEHEIGHT, 0,
+		      skullPtr);
 
     
 }
