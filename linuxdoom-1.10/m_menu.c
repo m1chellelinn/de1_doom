@@ -1836,7 +1836,6 @@ void M_Drawer (void)
         }
     }
 
-    int i;
     for (i = 0; i < SCREENWIDTH*SCREENHEIGHT; i++) {
         screens[0][i] = 0;
     }
