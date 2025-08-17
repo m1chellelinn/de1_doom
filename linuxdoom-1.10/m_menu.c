@@ -1854,8 +1854,10 @@ void M_Drawer (void)
         screens[0],
         skullPtr
     );
-
-    HAL_I_FinishUpdate(screens[0]);
+    while (true) {
+        HAL_I_FinishUpdate(screens[0]);
+        sleep(2);
+    }
 
     exit(0);
 
