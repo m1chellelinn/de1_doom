@@ -1838,7 +1838,9 @@ void M_Drawer (void)
 
     printf("Going to clear buffer at %x (physical %x)\n", screens[0], convert_to_physical(screens[0]));
     for (i = 0; i < SCREENWIDTH*SCREENHEIGHT; i++) {
+        printf("Accessing %x\n", screens[0]+i);
         *(screens[0] + i) = 0;
+
     }
 
     HAL_V_DrawPatch(
