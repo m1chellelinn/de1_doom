@@ -1860,10 +1860,10 @@ void M_Drawer (void)
     // *screens[0] = 0x0; // does it work with any arbitrary pixel?
 
     // while (true) {
-        I_FinishUpdate();
+        // I_FinishUpdate();
     // }
 
-    exit(0);
+    // exit(0);
 
     // V_DrawPatchDirect(x + SKULLXOFF,currentMenu->y - 5 + itemOn*LINEHEIGHT, 0,
 	// 	      skullPtr);

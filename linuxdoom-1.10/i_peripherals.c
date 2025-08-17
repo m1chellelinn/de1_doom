@@ -67,6 +67,7 @@ void HAL_V_DrawPatch(int x, int y, int scrn, void *screens, void *patch) {
     *(doom_ptr+4) = convert_to_physical(screens);
     *(doom_ptr+5) = convert_to_physical(patch);
     *doom_ptr = CMD_V_DrawPatch;
+    *doom_ptr; // do an empty read. This hangs execution until the FPGA is ready again
 }
 
 
