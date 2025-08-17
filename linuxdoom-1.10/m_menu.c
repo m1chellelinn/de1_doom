@@ -1836,16 +1836,16 @@ void M_Drawer (void)
         }
     }
 
-    // printf("Going to clear buffer at %x (physical %x)\n", screens[0], convert_to_physical(screens[0]));
-    // int idx;
-    // for (idx = 0; idx < SCREENWIDTH*SCREENHEIGHT; idx++) {
-    //     *(screens[0] + idx) = 0;
-    // }
+    printf("Going to clear buffer at %x (physical %x)\n", screens[0], convert_to_physical(screens[0]));
+    int idx;
+    for (idx = 0; idx < SCREENWIDTH*SCREENHEIGHT; idx++) {
+        *(screens[0] + idx) = 0;
+    }
 
-    // printf("Print some debugging pixels\n");
-    // for (idx = 0; idx < 100; idx++) {
-    //     *(screens[0] + idx) = idx;
-    // }
+    printf("Print some debugging pixels\n");
+    for (idx = 0; idx < 100; idx++) {
+        *(screens[0] + idx) = idx;
+    }
 
     HAL_V_DrawPatch(
         x + SKULLXOFF,
@@ -1856,14 +1856,14 @@ void M_Drawer (void)
     );
 
     // sleep(1);
-    *(screens[0]+0x57C1) = 0x49; // this was just one of the pixels written by FPGA
+    // *(screens[0]+0x57C1) = 0x49; // this was just one of the pixels written by FPGA
     // *screens[0] = 0x0; // does it work with any arbitrary pixel?
 
     // while (true) {
-        // I_FinishUpdate();
+        I_FinishUpdate();
     // }
 
-    // exit(0);
+    exit(0);
 
     // V_DrawPatchDirect(x + SKULLXOFF,currentMenu->y - 5 + itemOn*LINEHEIGHT, 0,
 	// 	      skullPtr);
