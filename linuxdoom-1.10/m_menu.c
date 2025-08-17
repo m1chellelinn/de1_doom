@@ -1859,14 +1859,13 @@ void M_Drawer (void)
     *screens[0] = 0x0; // does it work with any arbitrary pixel?
 
     // while (true) {
-        HAL_I_FinishUpdate(screens[0]);
-        sleep(10);
+    //     HAL_I_FinishUpdate(screens[0]);
     // }
 
-    exit(0);
+    // exit(0);
 
-    V_DrawPatchDirect(x + SKULLXOFF,currentMenu->y - 5 + itemOn*LINEHEIGHT, 0,
-		      skullPtr);
+    // V_DrawPatchDirect(x + SKULLXOFF,currentMenu->y - 5 + itemOn*LINEHEIGHT, 0,
+	// 	      skullPtr);
 
     
 }
