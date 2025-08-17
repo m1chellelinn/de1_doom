@@ -12,6 +12,8 @@ extern volatile int *doom_ptr;
 
 /* Prototypes for functions used to access physical memory addresses */
 
+inline int convert_to_physical(int virtual_addr);
+
 /* Open /dev/mem to give access to physical addresses */
 int open_physical (int);
 
