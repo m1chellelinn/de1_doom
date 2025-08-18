@@ -1808,7 +1808,7 @@ void M_Drawer (void)
         for (idx = 0; idx < 600; idx++) {
             printf("%02X ", *((byte*)skullPtr + idx) );
         }
-        // printedPatchInfo = true;
+        printedPatchInfo = true;
 
         // printf(
         //     "Patch at (%d,%d), scrn=%d, patch=%x\n"
