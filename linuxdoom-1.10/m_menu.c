@@ -1851,13 +1851,13 @@ void M_Drawer (void)
     //     *(screens[0] + idx) = idx;
     // }
 
-    HAL_V_DrawPatch(
-        x + SKULLXOFF,
-        currentMenu->y - 5 + itemOn*LINEHEIGHT, 
-        0,
-        screens[0],
-        skullPtr
-    );
+    // HAL_V_DrawPatch(
+    //     x + SKULLXOFF,
+    //     currentMenu->y - 5 + itemOn*LINEHEIGHT, 
+    //     0,
+    //     screens[0],
+    //     skullPtr
+    // );
 
     // sleep(1);
     // *(screens[0]+0x57C1) = 0x49; // this was just one of the pixels written by FPGA
@@ -1867,8 +1867,8 @@ void M_Drawer (void)
 
     // exit(0);
 
-    // V_DrawPatchDirect(x + SKULLXOFF,currentMenu->y - 5 + itemOn*LINEHEIGHT, 0,
-	// 	      skullPtr);
+    V_DrawPatchDirect(x + SKULLXOFF,currentMenu->y - 5 + itemOn*LINEHEIGHT, 0,
+		      skullPtr);
 
     
 }

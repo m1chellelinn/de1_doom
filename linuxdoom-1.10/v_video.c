@@ -210,8 +210,8 @@ V_DrawPatch
   int		scrn,
   patch_t*	patch ) 
 { 
-    // HAL_V_DrawPatch(x, y, scrn, screens[scrn], patch);
-    // return;
+    HAL_V_DrawPatch(x, y, scrn, screens[scrn], patch);
+    return;
 
     int		count;
     int		col; 
