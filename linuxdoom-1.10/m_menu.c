@@ -1804,36 +1804,40 @@ void M_Drawer (void)
     patch_t *skullPtr = W_CacheLumpName(skullName[whichSkull],PU_CACHE);
 
     if (!printedPatchInfo) {
-        printedPatchInfo = true;
-
-        printf(
-            "Patch at (%d,%d), scrn=%d, patch=%x\n"
-            "  size: %dx%d\n",
-            x + SKULLXOFF,
-            currentMenu->y - 5 + itemOn*LINEHEIGHT, 
-            0, 
-            skullPtr, 
-            skullPtr->width, 
-            skullPtr->height
-        );
-        int col;
-        for (col = 0; col < skullPtr->width; col++) {
-            column_t *column = (column_t *)((byte *)skullPtr + LONG(skullPtr->columnofs[col]));
-            printf(
-                "  Column %d, offset %d, len=%d, topdelta=%d\n"
-                "    Data: ",
-                col + 1, skullPtr->columnofs[col],
-                column->length, column->topdelta
-            );
-            while (column->topdelta != 0xff) {
-                int i;
-                for (i = 0; i < column->length + 4; i++) {
-                    printf("%x ", *((byte *)column + i));
-                }
-                column = (column_t *)( (byte*)column + column->length + 4);
-            }
-            printf("ff --> data end\n");
+        int idx;
+        for (idx = 0; idx < 600; idx++) {
+            printf("%02X ", *((byte*)skullPtr + idx) );
         }
+        // printedPatchInfo = true;
+
+        // printf(
+        //     "Patch at (%d,%d), scrn=%d, patch=%x\n"
+        //     "  size: %dx%d\n",
+        //     x + SKULLXOFF,
+        //     currentMenu->y - 5 + itemOn*LINEHEIGHT, 
+        //     0, 
+        //     skullPtr, 
+        //     skullPtr->width, 
+        //     skullPtr->height
+        // );
+        // int col;
+        // for (col = 0; col < skullPtr->width; col++) {
+        //     column_t *column = (column_t *)((byte *)skullPtr + LONG(skullPtr->columnofs[col]));
+        //     printf(
+        //         "  Column %d, offset %d, len=%d, topdelta=%d\n"
+        //         "    Data: ",
+        //         col + 1, skullPtr->columnofs[col],
+        //         column->length, column->topdelta
+        //     );
+        //     while (column->topdelta != 0xff) {
+        //         int i;
+        //         for (i = 0; i < column->length + 4; i++) {
+        //             printf("%x ", *((byte *)column + i));
+        //         }
+        //         column = (column_t *)( (byte*)column + column->length + 4);
+        //     }
+        //     printf("ff --> data end\n");
+        // }
     }
 
     // printf("Going to clear buffer at %x (physical %x)\n", screens[0], convert_to_physical(screens[0]));
