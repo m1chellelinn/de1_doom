@@ -341,12 +341,9 @@ void D_Display (void)
     current_time_ms = (ts.tv_sec << 10) + (ts.tv_nsec >> 16);
     if (current_time_ms - prev_time_text_ms >= DEMO_RENDER_INTERVAL_MS) {
         prev_time_text_ms = current_time_ms;
-    }
-    else {
-        return;
+		M_Drawer_Menu();
     }
 
-	M_Drawer_Menu();
     NetUpdate ();         // send out any new accumulation
 
 
