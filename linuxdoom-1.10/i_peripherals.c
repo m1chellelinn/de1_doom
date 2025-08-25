@@ -50,7 +50,7 @@ int unmap_physical(void * virtual_base, unsigned int span) {
 
 void HAL_I_FinishUpdate(byte *screens) {
     // Perform some dummy-reads so that buffered memcpy/memset data gets flushed
-    volatile byte *dest = ((byte *)screens)[0];
+    volatile byte *dest = ((byte *)screens);
     *dest;
     *(dest+100);
     *(dest+(SCREENWIDTH<<7));
