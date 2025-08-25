@@ -66,7 +66,7 @@ void HAL_I_SetPalette(byte* palette) {
 
 void HAL_V_DrawPatch(int x, int y, int scrn, void *screens, void *patch) {
     // Perform some dummy-reads so that buffered memcpy/memset data gets flushed
-    byte *dest = ((byte *)screens)[scrn] + y * SCREENWIDTH + x;
+    byte *dest = ((byte **)screens)[scrn] + y * SCREENWIDTH + x;
     *dest; *(dest+1); *(dest+SCREENWIDTH);
 
     *(doom_ptr+1) = x;
