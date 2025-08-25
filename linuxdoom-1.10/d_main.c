@@ -40,6 +40,7 @@ static const char rcsid[] = "$Id: d_main.c,v 1.8 1997/02/03 22:45:09 b1 Exp $";
 #include <fcntl.h>
 #endif
 
+#include <time.h>
 
 #include "doomdef.h"
 #include "doomstat.h"
@@ -197,6 +198,7 @@ void D_ProcessEvents (void)
 gamestate_t     wipegamestate = GS_DEMOSCREEN;
 extern  boolean setsizeneeded;
 extern  int             showMessages;
+long long prev_time_ms = 0;
 void R_ExecuteSetViewSize (void);
 
 void D_Display (void)
@@ -264,7 +266,15 @@ void D_Display (void)
 		break;
 
       case GS_DEMOSCREEN:
-		D_PageDrawer ();
+		
+		struct timespec ts;
+		clock_gettime(CLOCK_MONOTONIC, &ts);
+		long long current_time_ms = (ts.tv_sec << 10) + (ts.tv_nsec >> 16);
+		if (current_time_ms - prev_time_ms >= DEMO_RENDER_INTERVAL_MS) {
+			prev_time_ms = current_time_ms;
+			D_PageDrawer ();
+		}
+
 		break;
     }
     

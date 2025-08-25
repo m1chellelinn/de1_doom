@@ -43,6 +43,12 @@
 #define CMD_Wi_slamBackground 10 //
 
 //
+// menu rendering
+//
+#define DEMO_RENDER_INTERVAL_MS 200
+
+
+//
 // Global parameters/defines.
 //
 // DOOM version
