@@ -49,6 +49,10 @@ int unmap_physical(void * virtual_base, unsigned int span) {
 
 
 void HAL_I_FinishUpdate(byte *screens) {
+    // Perform some dummy-reads so that buffered memcpy/memset data gets flushed
+    byte *dest = ((byte *)screens)[0];
+    *dest; *(dest+100); *(dest+(SCREENWIDTH<<7));
+
     *(doom_ptr+1) = convert_to_physical(screens);
     *doom_ptr = CMD_I_FinishUpdate;
 }
@@ -61,6 +65,10 @@ void HAL_I_SetPalette(byte* palette) {
 
 
 void HAL_V_DrawPatch(int x, int y, int scrn, void *screens, void *patch) {
+    // Perform some dummy-reads so that buffered memcpy/memset data gets flushed
+    byte *dest = ((byte *)screens)[scrn] + y * SCREENWIDTH + x;
+    *dest; *(dest+1); *(dest+SCREENWIDTH);
+
     *(doom_ptr+1) = x;
     *(doom_ptr+2) = y;
     *(doom_ptr+3) = scrn;
