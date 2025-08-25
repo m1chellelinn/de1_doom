@@ -69,12 +69,7 @@ void HAL_I_SetPalette(byte* palette) {
 void HAL_V_DrawPatch(int x, int y, int scrn, void *screens, void *patch) {
     // Perform some dummy-reads so that buffered memcpy/memset data gets flushed
     volatile byte *dest = ((byte *)screens) + y*SCREENWIDTH + x + scrn*SCREENWIDTH*SCREENHEIGHT;
-    printf(
-        "Dest: %x\n"
-        "(byte **)screens) = %x\n"
-        "y * SCREENWIDTH + x = %x\n"
-        , dest, ((byte **)screens), y * SCREENWIDTH + x
-    );
+
     *dest;
     *(dest+1);
     *(dest+SCREENWIDTH);
