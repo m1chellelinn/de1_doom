@@ -45,7 +45,7 @@
 //
 // menu rendering
 //
-#define DEMO_RENDER_INTERVAL_MS 200
+#define DEMO_RENDER_INTERVAL_MS 50
 
 
 //
