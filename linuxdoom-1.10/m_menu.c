@@ -1739,7 +1739,7 @@ boolean printedPatchInfo = false;
 // Called after the view has been rendered,
 // but before it has been blitted.
 //
-long long prev_time_ms = 0;
+long long menu_prev_time_ms = 0;
 void M_Drawer (void)
 {
     static short	x;
@@ -1752,8 +1752,8 @@ void M_Drawer (void)
 
     clock_gettime(CLOCK_MONOTONIC, &ts);
     long long current_time_ms = (ts.tv_sec << 10) + (ts.tv_nsec >> 16);
-    if (current_time_ms - prev_time_ms >= DEMO_RENDER_INTERVAL_MS) {
-        prev_time_ms = current_time_ms;
+    if (current_time_ms - menu_prev_time_ms >= DEMO_RENDER_INTERVAL_MS) {
+        menu_prev_time_ms = current_time_ms;
     }
     else {
         return;
