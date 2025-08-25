@@ -199,6 +199,7 @@ gamestate_t     wipegamestate = GS_DEMOSCREEN;
 extern  boolean setsizeneeded;
 extern  int             showMessages;
 long long prev_time_ms = 0;
+
 void R_ExecuteSetViewSize (void);
 
 void D_Display (void)
@@ -216,6 +217,7 @@ void D_Display (void)
     boolean			done;
     boolean			wipe = false;
     boolean			redrawsbar;
+	struct timespec ts;
 
     if (nodrawers) return;                    // for comparative timing / profiling
 
@@ -267,7 +269,6 @@ void D_Display (void)
 
       case GS_DEMOSCREEN:
 		
-		struct timespec ts;
 		clock_gettime(CLOCK_MONOTONIC, &ts);
 		long long current_time_ms = (ts.tv_sec << 10) + (ts.tv_nsec >> 16);
 		if (current_time_ms - prev_time_ms >= DEMO_RENDER_INTERVAL_MS) {
