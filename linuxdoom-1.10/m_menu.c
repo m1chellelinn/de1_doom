@@ -1739,8 +1739,7 @@ boolean printedPatchInfo = false;
 // Called after the view has been rendered,
 // but before it has been blitted.
 //
-long long menu_prev_time_ms = 0;
-void M_Drawer (void)
+void M_Drawer_Msg (void)
 {
     static short	x;
     static short	y;
@@ -1748,16 +1747,6 @@ void M_Drawer (void)
     short		max;
     char		string[40];
     int			start;
-	struct timespec ts;
-
-    clock_gettime(CLOCK_MONOTONIC, &ts);
-    long long current_time_ms = (ts.tv_sec << 10) + (ts.tv_nsec >> 16);
-    if (current_time_ms - menu_prev_time_ms >= DEMO_RENDER_INTERVAL_MS) {
-        menu_prev_time_ms = current_time_ms;
-    }
-    else {
-        return;
-    }
 
     inhelpscreens = false;
 
@@ -1790,9 +1779,20 @@ void M_Drawer (void)
 	}
 	return;
     }
+}
 
-    if (!menuactive)
-	return;
+//
+// M_Drawer
+// Called after the view has been rendered,
+// but before it has been blitted.
+//
+void M_Drawer_Menu (void)
+{
+    static short	x;
+    static short	y;
+    short		i;
+    short		max;
+	struct timespec ts;
 
     if (currentMenu->routine)
 	currentMenu->routine();         // call Draw routine

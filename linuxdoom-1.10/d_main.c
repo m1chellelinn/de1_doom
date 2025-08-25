@@ -198,7 +198,8 @@ void D_ProcessEvents (void)
 gamestate_t     wipegamestate = GS_DEMOSCREEN;
 extern  boolean setsizeneeded;
 extern  int             showMessages;
-long long prev_time_ms = 0;
+long long prev_time_bg_ms = 0;
+long long prev_time_text_ms = 0;
 
 void R_ExecuteSetViewSize (void);
 
@@ -218,6 +219,7 @@ void D_Display (void)
     boolean			wipe = false;
     boolean			redrawsbar;
 	struct timespec ts;
+	long long current_time_ms;
 
     if (nodrawers) return;                    // for comparative timing / profiling
 
@@ -270,9 +272,9 @@ void D_Display (void)
       case GS_DEMOSCREEN:
 		
 		clock_gettime(CLOCK_MONOTONIC, &ts);
-		long long current_time_ms = (ts.tv_sec << 10) + (ts.tv_nsec >> 16);
-		if (current_time_ms - prev_time_ms >= DEMO_RENDER_INTERVAL_MS) {
-			prev_time_ms = current_time_ms;
+		current_time_ms = (ts.tv_sec << 10) + (ts.tv_nsec >> 16);
+		if (current_time_ms - prev_time_bg_ms >= DEMO_RENDER_INTERVAL_MS) {
+			prev_time_bg_ms = current_time_ms;
 			D_PageDrawer ();
 		}
 
@@ -332,7 +334,19 @@ void D_Display (void)
 
 
     // menus go directly to the screen
-    M_Drawer ();          // menu is drawn even on top of everything
+    M_Drawer_Msg ();          // menu is drawn even on top of everything
+
+
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    current_time_ms = (ts.tv_sec << 10) + (ts.tv_nsec >> 16);
+    if (current_time_ms - prev_time_text_ms >= DEMO_RENDER_INTERVAL_MS) {
+        prev_time_text_ms = current_time_ms;
+    }
+    else {
+        return;
+    }
+
+	M_Drawer_Menu();
     NetUpdate ();         // send out any new accumulation
 
 
