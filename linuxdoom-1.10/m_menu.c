@@ -31,7 +31,7 @@ rcsid[] = "$Id: m_menu.c,v 1.7 1997/02/03 22:45:10 b1 Exp $";
 #include <fcntl.h>
 #include <stdlib.h>
 #include <ctype.h>
-
+#include <time.h>
 
 #include "doomdef.h"
 #include "dstrings.h"
@@ -1739,6 +1739,7 @@ boolean printedPatchInfo = false;
 // Called after the view has been rendered,
 // but before it has been blitted.
 //
+long long prev_time_ms = 0;
 void M_Drawer (void)
 {
     static short	x;
@@ -1747,6 +1748,16 @@ void M_Drawer (void)
     short		max;
     char		string[40];
     int			start;
+	struct timespec ts;
+
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    long long current_time_ms = (ts.tv_sec << 10) + (ts.tv_nsec >> 16);
+    if (current_time_ms - prev_time_ms >= DEMO_RENDER_INTERVAL_MS) {
+        prev_time_ms = current_time_ms;
+    }
+    else {
+        return;
+    }
 
     inhelpscreens = false;
 
