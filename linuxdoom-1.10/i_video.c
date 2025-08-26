@@ -146,20 +146,25 @@ void GetAndSendUpdates() {
 void I_InitHardware (void) {
     printf("I_InitHardware: enter\n");
 
-    // Map FPGA virtual address ranges
-    if ((mmap_fd = open_physical (mmap_fd)) == -1) {
-        printf("I_InitHardware: fail to open file to /dev/mem");
-        return;
+    // Map FPGA bridges ranges
+    if ((fpga_fd = open_physical (fpga_fd)) == -1) {
+        printf("I_InitHardware: fail to open file to /dev/mem\n");
+        exit(1);
     }
-    if (!(lw_v_addr = map_physical (mmap_fd, LW_BRIDGE_BASE, LW_BRIDGE_SPAN))){
-        printf("I_InitHardware: fail to map FPGA LW bridge");
-        return;
+    if (!(lw_v_addr = map_physical (fpga_fd, LW_BRIDGE_BASE, LW_BRIDGE_SPAN))){
+        printf("I_InitHardware: fail to map FPGA LW bridge\n");
+        exit(1);
     }
-    if (!(sram_v_addr = map_physical (mmap_fd, FPGA_ONCHIP_BASE, FPGA_ONCHIP_SPAN))){
-        printf("I_InitHardware: fail to map FPGA SRAM bridge");
-        return;
+    if (!(sram_v_addr = map_physical (fpga_fd, FPGA_ONCHIP_BASE, FPGA_ONCHIP_SPAN))){
+        printf("I_InitHardware: fail to map FPGA SRAM bridge\n");
+        exit(1);
     }
 
+    // Map FPGA<->CPU shared RAM memory ranges
+    if ((shared_mem_fd = open_shared (shared_mem_fd)) == -1) {
+        printf("I_InitHardware: fail to open file to /dev/fpga_allocator_space\n");
+        exit(1);
+    }
     FILE *fp = fopen("/sys/kernel/fpga_space/phys", "r");
     if (!fp) {
         printf("I_InitHardware: failed to open /sys/kernel/fpga_space/phys\n");
@@ -180,8 +185,8 @@ void I_InitHardware (void) {
     }
 
     // phys_addr now holds the converted value
-    if (!(ddr_v_addr = map_physical(mmap_fd, 0, 7*1024*1024))) {
-        printf("I_InitHardware: fail to map DDR3 SDRAM\n");
+    if (!(ddr_v_addr = map_physical(shared_mem_fd, 0, 7*1024*1024))) {
+        printf("I_InitHardware: fail to map FPGA shared space\n");
         exit(1);
     }
 
@@ -212,13 +217,15 @@ void I_ShutdownGraphics(void) {
     printf("I_ShutdownGraphics: enter\n");
     unmap_physical (lw_v_addr, LW_BRIDGE_SPAN);
     unmap_physical (sram_v_addr, FPGA_ONCHIP_SPAN);
-    close_physical (mmap_fd);
+    close_physical (fpga_fd);
+    close_physical (shared_mem_fd);
 
     lw_v_addr = NULL;
     sram_v_addr = NULL;
     led_ptr = NULL;
     doom_ptr = NULL;
-    mmap_fd = -1;
+    fpga_fd = -1;
+    shared_mem_fd = -1;
     keys_fd = -1; // let Linux auto-close this file
 }
 

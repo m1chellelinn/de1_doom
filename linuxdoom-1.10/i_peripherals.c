@@ -12,6 +12,15 @@ inline int convert_to_physical(int virtual_addr) {
 
 int open_physical (int fd) {
     if (fd == -1) // check if already open
+    if ((fd = open( "/dev/mem", (O_RDWR | O_SYNC))) == -1) {
+        printf ("ERROR: could not open \"/dev/mem\"...\n");
+        exit(1);
+    }
+    return fd;
+}
+
+int open_shared (int fd) {
+    if (fd == -1) // check if already open
     if ((fd = open( "/dev/fpga_allocator_space", (O_RDWR | O_SYNC))) == -1) {
         printf ("ERROR: could not open \"/dev/fpga_allocator_space\"...\n");
         exit(1);

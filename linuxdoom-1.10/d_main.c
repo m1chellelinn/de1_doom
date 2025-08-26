@@ -79,7 +79,8 @@ static const char rcsid[] = "$Id: d_main.c,v 1.8 1997/02/03 22:45:09 b1 Exp $";
 
 #include "d_main.h"
 
-int mmap_fd = -1;
+int fpga_fd = -1;
+int shared_mem_fd = -1;
 volatile void *lw_v_addr = NULL;
 volatile void *sram_v_addr = NULL;
 volatile byte *ddr_v_addr = NULL;

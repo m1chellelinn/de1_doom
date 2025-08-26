@@ -1,7 +1,8 @@
 #include "doomtype.h"
 #include "i_address_map.h"
 
-extern int mmap_fd;
+extern int fpga_fd;
+extern int shared_mem_fd;
 extern volatile void *lw_v_addr;
 extern volatile void *sram_v_addr;
 extern volatile byte *ddr_v_addr;
@@ -16,6 +17,9 @@ inline int convert_to_physical(int virtual_addr);
 
 /* Open /dev/mem to give access to physical addresses */
 int open_physical (int);
+
+/* Open /dev/fpga_allocator_space to give access to FPGA shared memory */
+int open_shared (int);
 
 /* Close /dev/mem to give access to physical addresses */
 void close_physical (int);
