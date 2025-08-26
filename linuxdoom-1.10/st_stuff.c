@@ -501,7 +501,7 @@ void ST_refreshBackground(void)
 
     if (st_statusbaron)
     {
-		sleep(1);
+	sleep(1);
 	V_DrawPatch(ST_X, 0, BG, sbar);
 	V_DrawPatch(ST_X, 0, BG, sbar);
 	V_DrawPatch(ST_X, 0, BG, sbar);

@@ -61,7 +61,7 @@ void HAL_I_FinishUpdate(byte *screens) {
     // Perform some dummy-reads so that buffered memcpy/memset data gets flushed
     volatile byte *dest = ((byte *)screens);
     *dest;
-    *(dest+100);
+    *(dest+(SCREENWIDTH<<6));
     *(dest+(SCREENWIDTH<<7));
 
     *(doom_ptr+1) = convert_to_physical(screens);
@@ -90,6 +90,10 @@ void HAL_V_DrawPatch(int x, int y, int scrn, void *screens, void *patch) {
     *(doom_ptr+5) = convert_to_physical(patch);
     *doom_ptr = CMD_V_DrawPatch;
     int result = *doom_ptr; // do an empty read. This hangs execution until the FPGA is ready again
+
+    *dest;
+    *(dest+1);
+    *(dest+SCREENWIDTH);
 }
 
 
