@@ -180,7 +180,7 @@ void I_InitHardware (void) {
     }
 
     // phys_addr now holds the converted value
-    if (!(ddr_v_addr = map_physical(mmap_fd, ddr_p_addr, 7*1024*1024))) {
+    if (!(ddr_v_addr = map_physical(mmap_fd, 0, 7*1024*1024))) {
         printf("I_InitHardware: fail to map DDR3 SDRAM\n");
         exit(1);
     }
