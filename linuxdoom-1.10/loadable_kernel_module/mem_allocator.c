@@ -52,7 +52,7 @@ static int __init fpga_space_init(void) {
     sysfs_create_file(kobj, &phys_attr.attr);
 
     // char device
-    ret = alloc_chrdev_region(&devno, 0, 1, "fpga_space");
+    ret = alloc_chrdev_region(&devno, 0, 1, "fpga_allocator_space");
     if (ret < 0)
         goto err_sysfs;
 
@@ -61,14 +61,14 @@ static int __init fpga_space_init(void) {
     if (ret < 0)
         goto err_chrdev;
 
-    fpga_class = class_create(THIS_MODULE, "fpga");
+    fpga_class = class_create(THIS_MODULE, "fpga_allocator");
     if (IS_ERR(fpga_class)) {
         ret = PTR_ERR(fpga_class);
         goto err_cdev;
     }
-    device_create(fpga_class, NULL, devno, NULL, "fpga_space");
+    device_create(fpga_class, NULL, devno, NULL, "fpga_allocator_space");
 
-    pr_info("fpga_shm: reserved %lu bytes @ phys 0x%llx, device /dev/fpga_space\n",
+    pr_info("fpga_shm: reserved %lu bytes @ phys 0x%llx, device /dev/fpga_allocator_space\n",
             buf_size, (unsigned long long)phys_addr);
 
     return 0;
