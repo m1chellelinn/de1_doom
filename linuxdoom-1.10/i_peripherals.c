@@ -1,10 +1,23 @@
 #include "i_peripherals.h"
 #include "doomdef.h"
 #include <unistd.h>
+#include <time.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <sys/mman.h>
 
+inline void poll_until_finish() {
+    volatile int result;
+    
+    while (true) {
+        if (*doom_ptr != 0) {
+            usleep(FPGA_POLLING_INT_US);
+        }
+        else {
+            return;
+        }
+    }
+}
 
 inline int convert_to_physical(int virtual_addr) {
     return virtual_addr - ((int)ddr_v_addr) + ddr_p_addr;
@@ -66,12 +79,14 @@ void HAL_I_FinishUpdate(byte *screens) {
 
     *(doom_ptr+1) = convert_to_physical(screens);
     *doom_ptr = CMD_I_FinishUpdate;
+    poll_until_finish();
 }
 
 
 void HAL_I_SetPalette(byte* palette) {
     *(doom_ptr+1) = convert_to_physical(palette);
     *doom_ptr = CMD_I_SetPalette;
+    poll_until_finish();
 }
 
 
@@ -89,7 +104,7 @@ void HAL_V_DrawPatch(int x, int y, int scrn, void *screens, void *patch) {
     *(doom_ptr+4) = convert_to_physical(screens);
     *(doom_ptr+5) = convert_to_physical(patch);
     *doom_ptr = CMD_V_DrawPatch;
-    int result = *doom_ptr; // do an empty read. This hangs execution until the FPGA is ready again
+    poll_until_finish();
 
     *dest;
     *(dest+1);
@@ -102,6 +117,7 @@ void HAL_V_DrawPatch(int x, int y, int scrn, void *screens, void *patch) {
 void HAL_SelfCheck() {
     *(doom_ptr+1) = ddr_p_addr;
     *doom_ptr = CMD_V_Init; // Expect FPGA to line the address range ddr_p_addr to ddr_p_addr+20 with numbers 0, 1, 2, ..., 19.
+    poll_until_finish();
 
     int i;
     for (i = 0; i < 20; i++) {
@@ -117,4 +133,5 @@ void HAL_SelfCheck() {
 
 void HAL_Reset() {
     *doom_ptr = CMD_RESET;
+    poll_until_finish();
 }

@@ -43,8 +43,9 @@
 #define CMD_Wi_slamBackground 10 //
 
 //
-// menu rendering
+// hardware rendering
 //
+#define FPGA_POLLING_INT_US 20
 #define DEMO_RENDER_INTERVAL_MS 200
 
 
