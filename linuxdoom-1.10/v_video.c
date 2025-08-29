@@ -210,11 +210,11 @@ V_DrawPatch
   int		scrn,
   patch_t*	patch ) 
 { 
-    if (scrn > 1) {
-        printf("V_DrawPatch: called with scrn = %d\n", scrn);
-    }
-    HAL_V_DrawPatch(x, y, scrn, screens[0], patch);
-    return;
+    // if (scrn > 1) {
+    //     printf("V_DrawPatch: called with scrn = %d\n", scrn);
+    // }
+    // HAL_V_DrawPatch(x, y, scrn, screens[0], patch);
+    // return;
 
     int		count;
     int		col; 

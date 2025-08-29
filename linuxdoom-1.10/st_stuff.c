@@ -30,6 +30,7 @@ rcsid[] = "$Id: st_stuff.c,v 1.6 1997/02/03 22:45:13 b1 Exp $";
 #include <stdio.h>
 
 #include "i_system.h"
+#include "i_peripherals.h"
 #include "i_video.h"
 #include "z_zone.h"
 #include "m_random.h"
@@ -498,20 +499,86 @@ void ST_Stop(void);
 
 void ST_refreshBackground(void)
 {
+	int i;
+	int j;
+	byte *src;
+	volatile byte *src_v;
 
-    if (st_statusbaron)
-    {
-	sleep(1);
-	V_DrawPatch(ST_X, 0, BG, sbar);
-	V_DrawPatch(ST_X, 0, BG, sbar);
-	V_DrawPatch(ST_X, 0, BG, sbar);
+    if (!st_statusbaron) {
+		return;
+	}
 
-	if (netgame)
-	    V_DrawPatch(ST_FX, 0, BG, faceback);
+	printf("\n\n\nPrinting: source buffer, VOLATILE\n");
+	src_v = screens[BG] + SCREENWIDTH*0 + ST_X;
+	printf("Starting address: %x\n", src_v);
+	for (i = ST_HEIGHT; i>0; i--) {
+		for (j = 0; j < SCREENWIDTH; j++) {
+			printf("%02X ", *(src_v+j));
+		}
+		printf("\n");
+		src_v += SCREENWIDTH;
+	}
 
-	sleep(1);
+	printf("\n\n\nHAL_V_DrawPatch invoke...\n");
+	HAL_V_DrawPatch(ST_X, 0, screens[0], BG, sbar);
+
+	// V_DrawPatch(ST_X, 0, BG, sbar);
+    // src = screens[srcscrn]+SCREENWIDTH*srcy+srcx; 
+    // dest = screens[destscrn]+SCREENWIDTH*desty+destx; 
+
+    // for ( ; height>0 ; height--) 
+    // { 
+	// memcpy (dest, src, width); 
+	// src += SCREENWIDTH; 
+	// dest += SCREENWIDTH; 
+    // } 
+
+	printf("\n\n\nPrinting: source buffer, NORMAL\n");
+	src = screens[BG] + SCREENWIDTH*0 + ST_X;
+	printf("Starting address: %x\n", src);
+	for (i = ST_HEIGHT; i>0; i--) {
+		for (j = 0; j < SCREENWIDTH; j++) {
+			printf("%02X ", *(src+j));
+		}
+		printf("\n");
+		src += SCREENWIDTH;
+	}
+
+	printf("\n\n\nPrinting: source buffer, VOLATILE\n");
+	src_v = screens[BG] + SCREENWIDTH*0 + ST_X;
+	printf("Starting address: %x\n", src_v);
+	for (i = ST_HEIGHT; i>0; i--) {
+		for (j = 0; j < SCREENWIDTH; j++) {
+			printf("%02X ", *(src_v+j));
+		}
+		printf("\n");
+		src_v += SCREENWIDTH;
+	}
+
+	printf("\n\n\nCopy operation...\n");
 	V_CopyRect(ST_X, 0, BG, ST_WIDTH, ST_HEIGHT, ST_X, ST_Y, FG);
-    }
+
+	printf("\n\n\nPrinting: source buffer, NORMAL\n");
+	src = screens[FG] + SCREENWIDTH*ST_Y + ST_X;
+	printf("Starting address: %x\n", src);
+	for (i = ST_HEIGHT; i>0; i--) {
+		for (j = 0; j < SCREENWIDTH; j++) {
+			printf("%02X ", *(src+j));
+		}
+		printf("\n");
+		src += SCREENWIDTH;
+	}
+
+	printf("\n\n\nPrinting: destination buffer, VOLATILE\n");
+	src_v = screens[FG] + SCREENWIDTH*ST_Y + ST_X;
+	printf("Starting address: %x\n", src_v);
+	for (i = ST_HEIGHT; i>0; i--) {
+		for (j = 0; j < SCREENWIDTH; j++) {
+			printf("%02X ", *(src_v+j));
+		}
+		printf("\n");
+		src_v += SCREENWIDTH;
+	}
 
 }
 
