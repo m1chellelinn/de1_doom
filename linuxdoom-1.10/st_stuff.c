@@ -501,12 +501,18 @@ void ST_refreshBackground(void)
 {
 	int i;
 	int j;
+	int idx;
 	byte *src;
 	volatile byte *src_v;
 
     if (!st_statusbaron) {
 		return;
 	}
+	
+	// printf("\n\n\nPrinting: patch data\n");
+	// for (idx = 0; idx < 12000; idx++) {
+	// 	printf("%02X ", *((byte*)sbar + idx) );
+	// }
 
 	printf("\n\n\nPrinting: source buffer, VOLATILE\n");
 	src_v = screens[BG] + SCREENWIDTH*0 + ST_X;
